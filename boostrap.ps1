@@ -40,7 +40,7 @@ Write-Output ""
 Write-Output "Installing applications from Scoop..."
 scoop install git gpg nano
 scoop bucket add extras
-scoop install conemu 
+scoop install conemu oh-my-posh posh-git
 
 
 #Import GPG key
@@ -152,7 +152,7 @@ if(!(Test-Path $script:dotPath))
 Write-Output ""
 Write-Output "Linking Misc Config files"
 lns "$env:UserProfile\scoop\apps\conemu\current\ConEmu\ConEmu.xml" ".\conemu\ConEmu.xml"
-$local:psPath = (get-item $profile).Directory.FullName
-Write-Output $local:psPath
+#Probably a better way of doing this: 
+$local:psPath = ($profile).Replace("\Microsoft.PowerShell_profile.ps1","")
 lns "$local:psPath\Microsoft.Powershell_profile.ps1" ".\powershell\Microsoft.Powershell_profile.ps1"
 lns "$local:psPath\Microsoft.Powershell_functions.ps1" ".\powershell\Microsoft.Powershell_functions.ps1"
