@@ -1,0 +1,10 @@
+[user]
+        name = Adam Warner
+        email = adamw@rner.email
+        signingkey = 2EDFE579
+[commit]
+        gpgsign = true
+[core]
+        autocrlf = true
+[gpg]
+	program = C:\\Users\\Adam\\scoop\\apps\\gpg\\current\\bin\\gpg.exe
