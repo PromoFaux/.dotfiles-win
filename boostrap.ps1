@@ -38,9 +38,22 @@ else {
 ########################################################################################################################################################
 Write-Output ""
 Write-Output "Installing applications from Scoop..."
-scoop install git gpg nano coreutils
+scoop install git
+scoop install gpg
+scoop install nano
+scoop install coreutils
+
 scoop bucket add extras
-scoop install conemu oh-my-posh posh-git yubioath
+
+scoop install conemu
+scoop install oh-my-posh
+scoop install posh-git
+scoop install yubioath
+scoop install vscode
+
+scoop bucket add nerd-fonts
+scoop install Hack-NF
+
 
 
 #Import GPG key
