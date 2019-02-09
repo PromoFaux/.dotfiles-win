@@ -156,5 +156,4 @@ lns "$env:UserProfile\scoop\apps\conemu\current\ConEmu\ConEmu.xml" ".\conemu\Con
 
 #Powershell stuff
 $local:profileDir = Split-Path -parent $profile
-lns "$local:profileDir\Microsoft.Powershell_profile.ps1" ".\powershell\Microsoft.Powershell_profile.ps1"
-lns "$local:profileDir\Microsoft.Powershell_functions.ps1" ".\powershell\Microsoft.Powershell_functions.ps1"
+lns "$local:profileDir" ".\powershell"
