@@ -1,8 +1,19 @@
 # Linux-like Shortcuts
-
 function which($name)
 {
-    Get-Command $name | Select-Object -ExpandProperty Definition
+    if (!$name)
+    {
+        Write-Output "Must pass a command name"
+        return
+    }
+
+    if ([bool](Get-Command $name -ErrorAction SilentlyContinue))
+    {
+        Get-Command $name | Select-Object -ExpandProperty Definition
+    }
+    else {
+        Write-Output "$name is not found!"        
+    }
 }
 
 function rm-history

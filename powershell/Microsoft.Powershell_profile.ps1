@@ -4,15 +4,8 @@ Set-PSReadlineKeyHandler -Key Tab -Function Complete
 Set-PSReadlineKeyHandler -Key Ctrl+r -Function ReverseSearchHistory -ViMode Insert
 Set-PSReadlineKeyHandler -Key Ctrl+r -Function ReverseSearchHistory -ViMode Command
 
-$ProfileInfo = Get-Item $PROFILE
-if(($ProfileInfo).LinkType -eq "SymbolicLink") {
-	$ProfileScriptsPath = Split-Path $ProfileInfo.Target
-} else {
-	$ProfileScriptsPath = Split-Path $ProfileInfo.FullName
-}
-
-if (Test-Path("$ProfileScriptsPath\Microsoft.PowerShell_functions.ps1")) {
-	. "$ProfileScriptsPath\Microsoft.PowerShell_functions.ps1"
-}
+Push-Location (Split-Path -parent $profile)
+"aliases","extra" | Where-Object {Test-Path "$_.ps1"} | ForEach-Object -process {Invoke-Expression ". .\$_.ps1"}
+Pop-Location
 
 Set-Theme Paradox
