@@ -142,9 +142,17 @@ SetEnvVariable "User" "GIT_SSH" $local:sshPath
 ########################################################################################################################################################
 #If local copy of dotfiles repo does not exist, we should be able to clone it with the above set up!
 $script:dotPath = "$env:UserProfile\.dotfiles"
-if(!(Test-Path $script:dotPath))
+if(!(Test-Path "$script:dotPath\.git"))
 {
-    git clone git@github.com:PromoFaux/.dotfiles.git $script:dotPath    
+    Push-Location "$env:UserProfile\.dotfiles"
+    git init
+    git checkout -b temp
+    git add .
+    git commit -m "init"
+    git remote add origin git@github.com:PromoFaux/.dotfiles.git
+    git fetch
+    git checkout master
+    git branch -D temp
 }
 
 #Misc File Links
