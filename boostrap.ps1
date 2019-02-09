@@ -47,8 +47,8 @@ scoop install conemu oh-my-posh posh-git yubioath
 ########################################################################################################################################################
 ########################################################################################################################################################
 Write-Output ""
-Write-Output "Importing GPG key from ${script:pubKeyUrl}"
-(new-object net.webclient).downloadstring(${script:pubKeyUrl}) | gpg --import -
+Write-Output "Importing GPG key"
+gpg --import .\gpg\pubkey.asc
 
 
 #gpg-agent conf
