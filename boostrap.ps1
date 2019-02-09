@@ -38,7 +38,7 @@ else {
 ########################################################################################################################################################
 Write-Output ""
 Write-Output "Installing applications from Scoop..."
-scoop install git gpg nano
+scoop install git gpg nano coreutils
 scoop bucket add extras
 scoop install conemu oh-my-posh posh-git yubioath
 
@@ -126,6 +126,7 @@ while ($local:wait -eq $true) {
 Write-Output ""
 Write-Output "Linking .gitconfig and setting gpg.program"
 lns "$env:UserProfile\.gitconfig" ".\git\.gitconfig"
+lns "$env:UserProfile\.gitignore" ".\git\.gitignore"
 
 #Set gpg.program in git config (could be different on another machine?)
 $local:gpgpath = (Get-Command gpg).path
