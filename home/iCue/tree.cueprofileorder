@@ -19,7 +19,7 @@
 								<data>
 									<cereal_class_version>200</cereal_class_version>
 									<base>
-										<name>Default Profile</name>
+										<name>Gaming</name>
 										<isFolder>false</isFolder>
 										<children size="dynamic"/>
 										<parent>
@@ -32,7 +32,7 @@
 											</locked_ptr>
 										</parent>
 									</base>
-									<id>{ce871760-778a-4797-a0ea-5a8fd16d1b06}</id>
+									<id>{d596430f-3dd0-4b3c-b469-93206c57d43a}</id>
 								</data>
 							</ptr_wrapper>
 						</value0>
@@ -40,6 +40,28 @@
 							<polymorphic_id>1</polymorphic_id>
 							<ptr_wrapper>
 								<id>2147483651</id>
+								<data>
+									<base>
+										<name>Default Profile</name>
+										<isFolder>false</isFolder>
+										<children size="dynamic"/>
+										<parent>
+											<locked_ptr>
+												<polymorphic_id>2</polymorphic_id>
+												<ptr_wrapper>
+													<id>1</id>
+												</ptr_wrapper>
+											</locked_ptr>
+										</parent>
+									</base>
+									<id>{ce871760-778a-4797-a0ea-5a8fd16d1b06}</id>
+								</data>
+							</ptr_wrapper>
+						</value1>
+						<value2>
+							<polymorphic_id>1</polymorphic_id>
+							<ptr_wrapper>
+								<id>2147483652</id>
 								<data>
 									<base>
 										<name>Idle</name>
@@ -55,28 +77,6 @@
 										</parent>
 									</base>
 									<id>{086a3987-34fc-4ccc-b981-69a856ad7eca}</id>
-								</data>
-							</ptr_wrapper>
-						</value1>
-						<value2>
-							<polymorphic_id>1</polymorphic_id>
-							<ptr_wrapper>
-								<id>2147483652</id>
-								<data>
-									<base>
-										<name>Profile 3</name>
-										<isFolder>false</isFolder>
-										<children size="dynamic"/>
-										<parent>
-											<locked_ptr>
-												<polymorphic_id>2</polymorphic_id>
-												<ptr_wrapper>
-													<id>1</id>
-												</ptr_wrapper>
-											</locked_ptr>
-										</parent>
-									</base>
-									<id>{d596430f-3dd0-4b3c-b469-93206c57d43a}</id>
 								</data>
 							</ptr_wrapper>
 						</value2>
