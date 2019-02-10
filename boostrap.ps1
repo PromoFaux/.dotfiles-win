@@ -19,6 +19,9 @@ $script:expectedSSHKey = "2048 SHA256:BVZ+g2vOhiCmEDjN2FNR/mazm+se0+tkGTBFg24mk4
 CreateDirIfNotExist($script:binPath)
 CreateDirIfNotExist($script:tempPath)
 
+#Kill these two if they're running
+taskkill /f /im:gpg-agent.exe
+taskkill /f /im:wsl-ssh-pageant.exe
 
 #Install Scoop
 ########################################################################################################################################################
@@ -38,24 +41,35 @@ else {
 ########################################################################################################################################################
 Write-Output ""
 Write-Output "Installing applications from Scoop..."
-scoop install git
-scoop install gpg
-scoop install nano
-scoop install coreutils
 
 scoop bucket add extras
 
-scoop install conemu
 scoop install oh-my-posh
 scoop install posh-git
-scoop install yubioath
-scoop install vscode
 
 scoop bucket add nerd-fonts
 scoop install Hack-NF
 
+#Chocolatey
+########################################################################################################################################################
+########################################################################################################################################################
+if (!(CommandExists("choco")))
+{
+    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+}
+else {    
+    Write-Warn "Chocolatey Already installed"
+} 
 
+choco install git -y --limit-output -params '"/GitAndUnixToolsOnPath /NoShellIntegration"'
+choco install Gpg4win -y --limit-output
 
+choco install GoogleChrome -y --limit-output
+choco install vscode -y --limit-output
+choco install yubico-authenticator -y --limit-output
+choco install nano -y --limit-output
+
+RefreshEnv.cmd
 #Import GPG key
 ########################################################################################################################################################
 ########################################################################################################################################################
@@ -173,7 +187,7 @@ if(!(Test-Path "$script:dotPath\.git"))
 ########################################################################################################################################################
 Write-Output ""
 Write-Output "Linking Misc Config files"
-lns "$env:UserProfile\scoop\apps\conemu\current\ConEmu\ConEmu.xml" ".\conemu\ConEmu.xml"
+lns "$env:AppData\ConEmu.xml" ".\conemu\ConEmu.xml"
 
 #Powershell stuff
 $local:profileDir = Split-Path -parent $profile
