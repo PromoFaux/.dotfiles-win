@@ -9,6 +9,7 @@ Install geforce-experience
 Install razer-synapse-2
 Install cue
 Install discord.install
+Install msiafterburner
 
 lns "$env:APPDATA\corsair\CUE\profiles" ".\iCue"
 

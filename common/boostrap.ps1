@@ -47,6 +47,8 @@ scoop bucket add extras
 scoop install oh-my-posh
 scoop install posh-git
 
+scoop install sublime-merge
+
 scoop bucket add nerd-fonts
 scoop install Hack-NF
 
