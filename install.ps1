@@ -1,58 +1,48 @@
-$account = "promofaux"
-$repo    = ".dotfiles"
-$branch  = "master"
+#Requires -RunAsAdministrator
 
-$dotfilesTempDir = Join-Path $env:TEMP "dotfiles"
-if (![System.IO.Directory]::Exists($dotfilesTempDir)) {[System.IO.Directory]::CreateDirectory($dotfilesTempDir)}
-$sourceFile = Join-Path $dotfilesTempDir "dotfiles.zip"
-$dotfilesInstallDir = "$env:USERPROFILE\.dotfiles"
+. ".\utils.ps1" 
 
-function Download-File {
-  param (
-    [string]$url,
-    [string]$file
-  )
-  Write-Host "Downloading $url to $file"
-  [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-  Invoke-WebRequest -Uri $url -OutFile $file
+# Sanity Check
 
+if (-not [environment]::Is64BitOperatingSystem) {
+    Write-Error "Only 64 bit Windows is supported"
+    exit
 }
 
-function Unzip-File {
-    param (
-        [string]$File,
-        [string]$Destination = (Get-Location).Path
-    )
+#Kill these two if they're running
+taskkill /f /im:gpg-agent.exe
+taskkill /f /im:wsl-ssh-pageant.exe
 
-    $filePath = Resolve-Path $File
-    $destinationPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Destination)
+$script:account = "promofaux"
+$script:repo    = ".dotfiles"
 
-    If (($PSVersionTable.PSVersion.Major -ge 3) -and
-        (
-            [version](Get-ItemProperty -Path "HKLM:\Software\Microsoft\NET Framework Setup\NDP\v4\Full" -ErrorAction SilentlyContinue).Version -ge [version]"4.5" -or
-            [version](Get-ItemProperty -Path "HKLM:\Software\Microsoft\NET Framework Setup\NDP\v4\Client" -ErrorAction SilentlyContinue).Version -ge [version]"4.5"
-        )) {
-        try {
-            [System.Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.FileSystem") | Out-Null
-            [System.IO.Compression.ZipFile]::ExtractToDirectory("$filePath", "$destinationPath")
-        } catch {
-            Write-Warning -Message "Unexpected Error. Error details: $_.Exception.Message"
-        }
-    } else {
-        try {
-            $shell = New-Object -ComObject Shell.Application
-            $shell.Namespace($destinationPath).copyhere(($shell.NameSpace($filePath)).items())
-        } catch {
-            Write-Warning -Message "Unexpected Error. Error details: $_.Exception.Message"
-        }
-    }
+$script:dotfilesInstallDir = "$env:USERPROFILE\.dotfiles"
+
+#Install Scoop and chocolatey
+Write-Output "Installing Scoop..."
+if (!(CommandExists("scoop"))) {    
+    Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+    Invoke-Expression (new-object net.webclient).downloadstring('https://get.scoop.sh')
+}
+else {    
+    Write-Warn "Scoop Already installed"
 }
 
-Download-File "https://github.com/$account/$repo/archive/$branch.zip" $sourceFile
-if ([System.IO.Directory]::Exists($dotfilesInstallDir)) {[System.IO.Directory]::Delete($dotfilesInstallDir, $true)}
-Unzip-File $sourceFile $dotfilesTempDir
+if (!(CommandExists("choco")))
+{
+    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+}
+else {    
+    Write-Warn "Chocolatey Already installed"
+}
 
-Move-Item "$dotfilesTempDir\.dotfiles-master\" $dotfilesInstallDir
+#Install git so we can clone the repo to the local machine
+choco install git -y --limit-output -params '"/GitAndUnixToolsOnPath /NoShellIntegration"'
+#using rm.exe from git install seems to be happy to delete a folder containing a .git folder. PS/Windows cannot, for some reason.
+rm.exe -rf $script:dotfilesInstallDir
 
-Set-Location $dotfilesInstallDir
-.\bootstrap.ps1
+git clone "https://github.com/$script:account/$script:repo" $script:dotfilesInstallDir
+
+Push-Location $script:dotfilesInstallDir
+& .\bootstrap.ps1
+Pop-Location

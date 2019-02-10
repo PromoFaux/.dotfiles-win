@@ -19,10 +19,6 @@ $script:expectedSSHKey = "2048 SHA256:BVZ+g2vOhiCmEDjN2FNR/mazm+se0+tkGTBFg24mk4
 CreateDirIfNotExist($script:binPath)
 CreateDirIfNotExist($script:tempPath)
 
-#Kill these two if they're running
-taskkill /f /im:gpg-agent.exe
-taskkill /f /im:wsl-ssh-pageant.exe
-
 #Install Scoop
 ########################################################################################################################################################
 ########################################################################################################################################################
@@ -35,10 +31,6 @@ else {
     Write-Warn "Scoop Already installed"
 }    
 
-
-#Install some programs!
-########################################################################################################################################################
-########################################################################################################################################################
 Write-Output ""
 Write-Output "Installing applications from Scoop..."
 
@@ -171,20 +163,24 @@ SetEnvVariable "User" "GIT_SSH" $local:sshPath
 #Dotfiles repo
 ########################################################################################################################################################
 ########################################################################################################################################################
-#If local copy of dotfiles repo does not exist, we should be able to clone it with the above set up!
+#If this dotfiles repo has been installed via install.ps1, it wont be a repo, so need to init the folder and add remote.
 $script:dotPath = "$env:UserProfile\.dotfiles"
-if(!(Test-Path "$script:dotPath\.git"))
-{
-    Push-Location "$env:UserProfile\.dotfiles"
-    git init
-    git checkout -b temp
-    git add .
-    git commit -m "init"
-    git remote add origin git@github.com:PromoFaux/.dotfiles.git
-    git fetch
-    git checkout master
-    git branch -D temp
-}
+Push-Location $script:dotPath
+git remote remove origin
+git remote add origin git@github.com:PromoFaux/.dotfiles.git
+git fetch
+# if(!(Test-Path "$script:dotPath\.git"))
+# {
+#     Push-Location "$env:UserProfile\.dotfiles"
+#     git init
+#     git checkout -b temp
+#     git add .
+#     git commit -m "init"
+#     git remote add origin git@github.com:PromoFaux/.dotfiles.git
+#     git fetch
+#     git checkout master
+#     git branch -D temp
+# }
 
 #Misc File Links
 ########################################################################################################################################################
