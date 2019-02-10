@@ -29,6 +29,7 @@ Install screentogif
 Install Everything
 Install 7zip
 Install vlc
+Install foxitreader
 
 #Scoop
 scoop bucket add extras
