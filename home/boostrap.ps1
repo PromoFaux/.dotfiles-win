@@ -11,5 +11,5 @@ Install cue
 Install discord.install
 Install msiafterburner
 
-lns "$env:APPDATA\corsair\CUE\profiles" ".\iCue"
-lns "${env:ProgramFiles(x86)}\MSI Afterburner\MSIAfterburner.cfg" ".\MSIAfterburner\MSIAfterburner.cfg"
+lns "$env:APPDATA\corsair\CUE\profiles" ".\iCue\profiles"
+lns "${env:ProgramFiles(x86)}\MSI Afterburner\Profiles" ".\MSIAfterburner\Profiles"
