@@ -13,3 +13,4 @@ Install msiafterburner
 
 lns "$env:APPDATA\corsair\CUE\profiles" ".\iCue"
 
+lns "$env:APPDATA\Everything\Everything.ini" ".\Everything\Everything.ini"
