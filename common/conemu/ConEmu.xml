@@ -8,7 +8,7 @@
 <key name="Software">
 	<key name="ConEmu">
 		<!-- Main configuration (/config argument is not specified) -->
-		<key name=".Vanilla" modified="2019-02-10 15:57:53" build="190108">
+		<key name=".Vanilla" modified="2019-02-10 20:35:27" build="190108">
 			<value name="SingleInstance" type="hex" data="00"/>
 			<value name="KeyboardHooks" type="hex" data="01"/>
 			<value name="UseInjects" type="hex" data="01"/>
@@ -21,10 +21,11 @@
 			<value name="FontSize" type="ulong" data="14"/>
 			<value name="StatusFontHeight" type="long" data="12"/>
 			<value name="TabFontHeight" type="long" data="13"/>
-			<value name="StartType" type="hex" data="00"/>
+			<value name="StartType" type="hex" data="02"/>
 			<value name="CmdLine" type="string" data=""/>
 			<value name="StartTasksFile" type="string" data=""/>
-			<value name="StartTasksName" type="string" data=""/>
+			<value name="StartTasksName" type="string" data="{Shells::PowerShell (Admin)}"/>
+			
 			
 			
 			
@@ -33,6 +34,7 @@
 			
 			
 			`
+			
 			
 			
 			
@@ -102,8 +104,8 @@
 			<value name="FadeInactiveLow" type="hex" data="00"/>
 			<value name="FadeInactiveHigh" type="hex" data="D0"/>
 			<value name="ConVisible" type="hex" data="00"/>
-			<value name="SetDefaultTerminal" type="hex" data="00"/>
-			<value name="SetDefaultTerminalStartup" type="hex" data="00"/>
+			<value name="SetDefaultTerminal" type="hex" data="01"/>
+			<value name="SetDefaultTerminalStartup" type="hex" data="01"/>
 			<value name="SetDefaultTerminalStartupTSA" type="hex" data="00"/>
 			<value name="DefaultTerminalAgressive" type="hex" data="01"/>
 			<value name="DefaultTerminalNoInjects" type="hex" data="00"/>
@@ -171,7 +173,7 @@
 			<value name="ConWnd Width" type="dword" data="000000ba"/>
 			<value name="ConWnd Height" type="dword" data="0000001a"/>
 			<value name="Cascaded" type="hex" data="01"/>
-			<value name="ConWnd X" type="long" data="-1927"/>
+			<value name="ConWnd X" type="long" data="-1921"/>
 			<value name="ConWnd Y" type="long" data="0"/>
 			<value name="16bit Height" type="ulong" data="0"/>
 			<value name="AutoSaveSizePos" type="hex" data="01"/>
@@ -688,7 +690,7 @@
 			<value name="SuppressBells" type="hex" data="01"/>
 			<value name="JumpListAutoUpdate" type="hex" data="01"/>
 			<value name="CompressLongStrings" type="hex" data="01"/>
-			<value name="LastMonitor" type="string" data="-1920,0,0,1040"/>
+			<value name="LastMonitor" type="string" data="-1920,0,0,1050"/>
 			<value name="Restore2ActiveMon" type="hex" data="01"/>
 			<value name="RestoreInactive" type="hex" data="01"/>
 			<value name="DownShowExOnTopMessage" type="hex" data="00"/>
