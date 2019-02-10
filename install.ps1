@@ -17,6 +17,9 @@ if (-not [environment]::Is64BitOperatingSystem) {
 taskkill /f /im:gpg-agent.exe
 taskkill /f /im:wsl-ssh-pageant.exe
 
+#delete .gitconfig if it exists.
+Remove-Item $env:USERPROFILE\.gitconfig -ErrorAction SilentlyContinue
+
 $script:account = "promofaux"
 $script:repo    = ".dotfiles"
 
