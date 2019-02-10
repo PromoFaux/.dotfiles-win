@@ -1,6 +1,6 @@
 #Requires -RunAsAdministrator
 
-. ".\utils.ps1" 
+. "..\utils.ps1" 
 
 # Sanity Check
 
@@ -61,13 +61,15 @@ else {
     Write-Warn "Chocolatey Already installed"
 } 
 
+#Install sourced from utils.ps1 TODO: pass params to Install
 choco install git -y --limit-output -params '"/GitAndUnixToolsOnPath /NoShellIntegration"'
-choco install Gpg4win -y --limit-output
+Install Gpg4win
+Install GoogleChrome
+Install vscode
+Install yubico-authenticator
+Install nano
 
-choco install GoogleChrome -y --limit-output
-choco install vscode -y --limit-output
-choco install yubico-authenticator -y --limit-output
-choco install nano -y --limit-output
+Install Everything
 
 RefreshEnv.cmd
 #Import GPG key

@@ -78,3 +78,12 @@ function Write-Warn([string]$message) {
     [Console]::Error.WriteLine($message)
     [Console]::ResetColor()
 }
+
+function Install([String]$package) {
+	if(-not ((choco list $package --exact --local-only --limitoutput) -like "$package*")) {
+		Write-Output "Installing package $package"
+		choco install $package -y --limitoutput
+	} else {
+		Write-Warn "Package $package already installed"
+	}
+}
