@@ -6,7 +6,6 @@
 $script:binPath = "C:\bin"
 $script:tempPath = "C:\temp"
 $script:gnupgPath = ""
-$script:pubKeyUrl = "https://keybase.io/promofaux/pgp_keys.asc"
 $script:expectedSSHKey = "2048 SHA256:BVZ+g2vOhiCmEDjN2FNR/mazm+se0+tkGTBFg24mk4g cardno:000604884497 (RSA)"
 
 #We need bin and temp
@@ -24,7 +23,6 @@ scoop bucket add extras
 
 scoop install oh-my-posh
 scoop install posh-git
-
 scoop install sublime-merge
 
 scoop bucket add nerd-fonts
@@ -37,7 +35,7 @@ Install GoogleChrome
 Install vscode
 Install yubico-authenticator
 Install nano
-
+Install screentogif
 Install Everything
 
 RefreshEnv.cmd
@@ -124,8 +122,12 @@ lns "$env:UserProfile\.gitconfig" ".\git\.gitconfig"
 lns "$env:UserProfile\.gitignore" ".\git\.gitignore"
 
 #Set gpg.program in git config (could be different on another machine?)
+$local:gitcfgGpgProgram = git config gpg.program
 $local:gpgpath = (Get-Command gpg).path
-git config --global gpg.program $local:gpgpath
+
+if (!($local:gitcfgGpgProgram -eq $local:gpgpath)){
+    git config --global gpg.program $local:gpgpath
+}
 
 # Set environment variable to tell git to use win32 SSH:
 $local:sshPath = (Get-Command ssh).path
