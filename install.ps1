@@ -1,6 +1,10 @@
 #Requires -RunAsAdministrator
 
-. ".\utils.ps1" 
+function CommandExists([string]$cmdName)
+{
+    $local:return = Get-Command $cmdName -ErrorAction SilentlyContinue
+    return $local:return
+}
 
 # Sanity Check
 
@@ -30,6 +34,7 @@ else {
 
 if (!(CommandExists("choco")))
 {
+    Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
     Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 }
 else {    
@@ -43,6 +48,19 @@ rm.exe -rf $script:dotfilesInstallDir
 
 git clone "https://github.com/$script:account/$script:repo" $script:dotfilesInstallDir
 
+
 Push-Location $script:dotfilesInstallDir
-& .\bootstrap.ps1
+
+$local:caption = "Choose Action";
+$local:message = "Which bootstrapper do you wish to run?";
+$local:co = new-Object System.Management.Automation.Host.ChoiceDescription "&Common Only","Common Only";
+$local:h = new-Object System.Management.Automation.Host.ChoiceDescription "&Home","Home";
+$local:choices = [System.Management.Automation.Host.ChoiceDescription[]]($local:co,$local:h);
+$local:answer = $host.ui.PromptForChoice($caption,$message,$choices,0)
+
+switch ($local:answer){
+    0 {& .\bootstrap.ps1; break}
+    1 {& .\bootstrap_home.ps1 ; break}
+}
+
 Pop-Location

@@ -2,12 +2,6 @@
 
 . "..\utils.ps1" 
 
-# Sanity Check
-
-if (-not [environment]::Is64BitOperatingSystem) {
-    Write-Error "Only 64 bit Windows is supported"
-    exit
-}
 
 $script:binPath = "C:\bin"
 $script:tempPath = "C:\temp"
@@ -19,21 +13,13 @@ $script:expectedSSHKey = "2048 SHA256:BVZ+g2vOhiCmEDjN2FNR/mazm+se0+tkGTBFg24mk4
 CreateDirIfNotExist($script:binPath)
 CreateDirIfNotExist($script:tempPath)
 
-#Install Scoop
+#Install Applications
 ########################################################################################################################################################
 ########################################################################################################################################################
-Write-Output "Installing Scoop..."
-if (!(CommandExists("scoop"))) {    
-    Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-    Invoke-Expression (new-object net.webclient).downloadstring('https://get.scoop.sh')
-}
-else {    
-    Write-Warn "Scoop Already installed"
-}    
-
 Write-Output ""
-Write-Output "Installing applications from Scoop..."
+Write-Output "Installing applications from package manager(s)..."
 
+#Scoop
 scoop bucket add extras
 
 scoop install oh-my-posh
@@ -45,15 +31,6 @@ scoop bucket add nerd-fonts
 scoop install Hack-NF
 
 #Chocolatey
-########################################################################################################################################################
-########################################################################################################################################################
-if (!(CommandExists("choco")))
-{
-    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-}
-else {    
-    Write-Warn "Chocolatey Already installed"
-} 
 
 #Install sourced from utils.ps1 TODO: pass params to Install
 choco install git -y --limit-output -params '"/GitAndUnixToolsOnPath /NoShellIntegration"'
@@ -66,13 +43,13 @@ Install nano
 Install Everything
 
 RefreshEnv.cmd
+
 #Import GPG key
 ########################################################################################################################################################
 ########################################################################################################################################################
 Write-Output ""
 Write-Output "Importing GPG key"
 gpg --import .\gpg\pubkey.asc
-
 
 #gpg-agent conf
 ########################################################################################################################################################
@@ -84,7 +61,6 @@ $gpgOutput = $gpgOutput -replace "Home: ", ""
 $script:gnupgPath = $gpgOutput -replace "/", "\"
     
 lns "$script:gnupgPath\gpg-agent.conf" ".\gpg\gpg-agent.conf"
-
 
 #YubiKey Batch File scheduled task thing
 ########################################################################################################################################################
@@ -120,7 +96,6 @@ Register-ScheduledTask -Xml (Get-Content "${script:tempPath}\gpg-agent.xml" | Ou
 
 Remove-Item -Path $script:tempPath\gpg-agent.xml
 
-
 #Check the Yubikey batch file works works
 ########################################################################################################################################################
 ########################################################################################################################################################
@@ -142,7 +117,6 @@ while ($local:wait -eq $true) {
     }
 } 
 
-
 #.gitconfig stuff
 ########################################################################################################################################################
 ########################################################################################################################################################
@@ -159,34 +133,25 @@ git config --global gpg.program $local:gpgpath
 $local:sshPath = (Get-Command ssh).path
 SetEnvVariable "User" "GIT_SSH" $local:sshPath
 
-
 #Dotfiles repo
 ########################################################################################################################################################
 ########################################################################################################################################################
 #If this dotfiles repo has been installed via install.ps1, it wont be a repo, so need to init the folder and add remote.
+Write-Output ""
+Write-Output "Configuring dotfiles repo to use SSH remote rather than https"
 $script:dotPath = "$env:UserProfile\.dotfiles"
 Push-Location $script:dotPath
 git remote remove origin
 git remote add origin git@github.com:PromoFaux/.dotfiles.git
 git fetch
-# if(!(Test-Path "$script:dotPath\.git"))
-# {
-#     Push-Location "$env:UserProfile\.dotfiles"
-#     git init
-#     git checkout -b temp
-#     git add .
-#     git commit -m "init"
-#     git remote add origin git@github.com:PromoFaux/.dotfiles.git
-#     git fetch
-#     git checkout master
-#     git branch -D temp
-# }
+Pop-Location
 
 #Misc File Links
 ########################################################################################################################################################
 ########################################################################################################################################################
 Write-Output ""
 Write-Output "Linking Misc Config files"
+
 lns "$env:AppData\ConEmu.xml" ".\conemu\ConEmu.xml"
 
 #Powershell stuff
