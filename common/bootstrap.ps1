@@ -32,8 +32,6 @@ scoop install Hack-NF
 
 #Chocolatey
 
-#Install sourced from utils.ps1 TODO: pass params to Install
-choco install git -y --limit-output -params '"/GitAndUnixToolsOnPath /NoShellIntegration"'
 Install Gpg4win
 Install GoogleChrome
 Install vscode
