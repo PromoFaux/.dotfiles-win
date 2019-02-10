@@ -18,16 +18,6 @@ CreateDirIfNotExist($script:tempPath)
 Write-Output ""
 Write-Output "Installing applications from package manager(s)..."
 
-#Scoop
-scoop bucket add extras
-
-scoop install oh-my-posh
-scoop install posh-git
-scoop install sublime-merge
-
-scoop bucket add nerd-fonts
-scoop install Hack-NF
-
 #Chocolatey
 
 Install Gpg4win
@@ -37,6 +27,18 @@ Install yubico-authenticator
 Install nano
 Install screentogif
 Install Everything
+Install 7zip
+Install vlc
+
+#Scoop
+scoop bucket add extras
+
+scoop install oh-my-posh
+scoop install posh-git
+scoop install sublime-merge
+
+scoop bucket add nerd-fonts
+scoop install Hack-NF
 
 RefreshEnv.cmd
 
@@ -157,3 +159,5 @@ lns "$env:AppData\ConEmu.xml" ".\conemu\ConEmu.xml"
 #Powershell stuff
 $local:profileDir = Split-Path -parent $profile
 lns "$local:profileDir" ".\powershell"
+
+& .\windows.ps1
