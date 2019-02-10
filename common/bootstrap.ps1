@@ -30,6 +30,7 @@ Install Everything
 Install 7zip
 Install vlc
 Install foxitreader
+Install etcher
 
 #Scoop
 scoop bucket add extras
