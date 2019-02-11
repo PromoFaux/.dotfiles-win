@@ -22,8 +22,5 @@ Install discord.install
 #Tools
 Install geforce-experience
 Install razer-synapse-2
-Install msiafterburner
-#Install cue
 Install hwmonitor
 
-lns "${env:ProgramFiles(x86)}\MSI Afterburner\Profiles" ".\MSIAfterburner\Profiles"
