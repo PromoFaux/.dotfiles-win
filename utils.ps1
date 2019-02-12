@@ -28,11 +28,11 @@ function WaitForProcessToStart([string]$procName)
     }
 }
 
-function lns([String]$link, [String]$target) {
+function lns([String]$link, [String]$target) {	
 	$file = Get-Item $link -ErrorAction SilentlyContinue
     $toFile = Get-Item $target -ErrorAction SilentlyContinue
     $target = $toFile.FullName
-
+    
 	if($file) {
 		if ($file.LinkType -ne "SymbolicLink") {
             Write-Warn "$($file.FullName) already exists and is not a symbolic link creating a backup"

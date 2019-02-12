@@ -58,12 +58,14 @@ $local:caption = "Choose Action";
 $local:message = "Which bootstrapper do you wish to run?";
 $local:co = new-Object System.Management.Automation.Host.ChoiceDescription "&Common Only","Common Only";
 $local:h = new-Object System.Management.Automation.Host.ChoiceDescription "&Home","Home";
-$local:choices = [System.Management.Automation.Host.ChoiceDescription[]]($local:co,$local:h);
+$local:w = new-Object System.Management.Automation.Host.ChoiceDescription "&Work","Work";
+$local:choices = [System.Management.Automation.Host.ChoiceDescription[]]($local:co,$local:h, $local:w);
 $local:answer = $host.ui.PromptForChoice($caption,$message,$choices,0)
 
 switch ($local:answer){
     0 {& .\bootstrap.ps1; break}
     1 {& .\bootstrap_home.ps1 ; break}
+    3 {& .\bootstrap_work.ps1 ; break}
 }
 
 Pop-Location
