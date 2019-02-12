@@ -61,6 +61,7 @@ $gpgOutput = $gpgOutput -replace "Home: ", ""
 $script:gnupgPath = $gpgOutput -replace "/", "\"
     
 lns "$script:gnupgPath\gpg-agent.conf" ".\gpg\gpg-agent.conf"
+lns "$script:gnupgPath\scdaemon.conf" ".\gpg\scdaemon.conf"
 
 #YubiKey Batch File scheduled task thing
 ########################################################################################################################################################
