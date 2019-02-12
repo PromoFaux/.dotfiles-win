@@ -23,6 +23,7 @@ Write-Output "Installing applications from package manager(s)..."
 Install Gpg4win
 Install GoogleChrome
 Install vscode
+Install conemu
 Install yubico-authenticator
 Install nano
 Install screentogif
