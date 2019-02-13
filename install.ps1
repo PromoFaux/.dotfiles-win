@@ -45,7 +45,7 @@ else {
 }
 
 #Install git so we can clone the repo to the local machine
-choco install git -y --limit-output -params '"/GitAndUnixToolsOnPath /NoShellIntegration"'
+choco install git -y --limit-output -params '"/GitOnlyOnPath /NoShellIntegration"'
 #using rm.exe from git install seems to be happy to delete a folder containing a .git folder. PS/Windows cannot, for some reason.
 rm.exe -rf $script:dotfilesInstallDir
 

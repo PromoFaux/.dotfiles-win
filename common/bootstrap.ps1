@@ -32,6 +32,12 @@ Install 7zip
 Install vlc
 Install foxitreader
 Install etcher
+Instasll 
+Install gnuwin32-coreutils.install #Doesn't add to path automatically
+if (-not ($env:PATH -like "*GNUWin32*")) {
+    Set-ItemProperty -Path ‘Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment’ -Name PATH -Value "$ENV:PATH;C:\Program Files (x86)\GnuWin32\bin"
+}
+
 
 #Scoop
 scoop bucket add extras
@@ -131,7 +137,7 @@ lns "$env:UserProfile\.gitignore" ".\git\.gitignore"
 $local:gitcfgGpgProgram = git config gpg.program
 $local:gpgpath = (Get-Command gpg).path
 
-if (!($local:gitcfgGpgProgram -eq $local:gpgpath)){
+if (!($local:gitcfgGpgProgram -eq $local:gpgpath)) {
     git config --global gpg.program $local:gpgpath
 }
 
