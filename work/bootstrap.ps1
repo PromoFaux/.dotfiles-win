@@ -27,3 +27,5 @@ $local:confDir = "U:\AdamW\Config"
 lns "$env:APPDATA\mRemoteNG\confCons.xml" "$local:confDir\mRemoteNG\confCons.xml" #config stored on U drive
 # lns "$env:APPDATA\Microsoft\Microsoft SQL Server\140\Tools\Shell\RegSrvr.xml" "$local:confDir\SSMS\RegSrvr.xml"
 
+lns "C:\repos" "U:\AdamW\Repos"
+
