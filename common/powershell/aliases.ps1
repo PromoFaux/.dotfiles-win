@@ -26,30 +26,37 @@ function rm-history
 
 # Directory Listing: Use `ls.exe` if available
 if (Get-Command ls.exe -ErrorAction SilentlyContinue | Test-Path) {
-    rm alias:ls -ErrorAction SilentlyContinue
+    Remove-Item alias:ls -ErrorAction SilentlyContinue
     # Set `ls` to call `ls.exe` and always use --color
     ${function:ls} = { ls.exe --color @args }
     # List all files in long format
-    ${function:l} = { ls -lF @args }
+    ${function:l} = { ls.exe -lF @args }
     # List all files in long format, including hidden files
-    ${function:la} = { ls -laF @args }
+    ${function:la} = { ls.exe -laF @args }
     # List only directories
     ${function:lsd} = { Get-ChildItem -Directory -Force @args }
 } else {
     # List all files, including hidden files
-    ${function:la} = { ls -Force @args }
+    ${function:la} = { Get-ChildItem -Force @args }
     # List only directories
     ${function:lsd} = { Get-ChildItem -Directory -Force @args }
 }
 
 # curl: Use `curl.exe` if available
 if (Get-Command curl.exe -ErrorAction SilentlyContinue | Test-Path) {
-    rm alias:curl -ErrorAction SilentlyContinue
+    Remove-Item alias:curl -ErrorAction SilentlyContinue
     # Set `ls` to call `ls.exe` and always use --color
     ${function:curl} = { curl.exe @args }
     # Gzip-enabled `curl`
-    ${function:gurl} = { curl --compressed @args }
+    ${function:gurl} = { curl.exe --compressed @args }
 } else {
     # Gzip-enabled `curl`
-    ${function:gurl} = { curl -TransferEncoding GZip }
+    ${function:gurl} = { Invoke-WebRequest -TransferEncoding GZip }
 }
+
+# rm: Use `rm.exe` if available
+if (Get-Command rm.exe -ErrorAction SilentlyContinue | Test-Path) {
+    Remove-Item alias:rm -ErrorAction SilentlyContinue
+    # Set `rm` to call `rm.exe`
+    ${function:rm} = { rm.exe @args }
+} 

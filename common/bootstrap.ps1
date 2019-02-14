@@ -1,6 +1,6 @@
 #Requires -RunAsAdministrator
 
-. "..\utils.ps1" 
+. "..\utils.ps1"
 
 
 $script:binPath = "C:\bin"
@@ -32,7 +32,7 @@ Install 7zip
 Install vlc
 Install foxitreader
 Install etcher
-Instasll 
+Instasll
 Install gnuwin32-coreutils.install #Doesn't add to path automatically
 if (-not ($env:PATH -like "*GNUWin32*")) {
     Set-ItemProperty -Path ‘Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment’ -Name PATH -Value "$ENV:PATH;C:\Program Files (x86)\GnuWin32\bin"
@@ -66,7 +66,7 @@ Write-Output "Linking gpg-agent.conf"
 $gpgOutput = & gpg --version | Select-String -Pattern "Home"
 $gpgOutput = $gpgOutput -replace "Home: ", ""
 $script:gnupgPath = $gpgOutput -replace "/", "\"
-    
+
 lns "$script:gnupgPath\gpg-agent.conf" ".\gpg\gpg-agent.conf"
 lns "$script:gnupgPath\scdaemon.conf" ".\gpg\scdaemon.conf"
 
@@ -78,7 +78,7 @@ Write-Output "Setting Up scheduled task to run script on yubi-key insert..."
 
 $local:taskName = "gpg-agent"
 #Check for, and remove task if it already exists. The one in the repo might be newer
-if (ScheduledTaskExists($local:taskName)) {        
+if (ScheduledTaskExists($local:taskName)) {
     Unregister-ScheduledTask $local:taskName -Confirm:$false
 }
 
@@ -123,7 +123,7 @@ while ($local:wait -eq $true) {
         Write-Output "SSH Key is as expected, so everything should be working!"
         $local:wait = $false
     }
-} 
+}
 
 #.gitconfig stuff
 ########################################################################################################################################################
@@ -170,4 +170,4 @@ lns "$env:AppData\ConEmu.xml" ".\conemu\ConEmu.xml"
 $local:profileDir = Split-Path -parent $profile
 lns "$local:profileDir" ".\powershell"
 
-& .\windows.ps1
+# & .\windows.ps1
