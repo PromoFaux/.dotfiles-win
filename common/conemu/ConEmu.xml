@@ -8,7 +8,7 @@
 <key name="Software">
 	<key name="ConEmu">
 		<!-- Main configuration (/config argument is not specified) -->
-		<key name=".Vanilla" modified="2019-02-14 16:56:11" build="190108">
+		<key name=".Vanilla" modified="2019-02-14 17:02:01" build="190108">
 			<value name="SingleInstance" type="hex" data="00"/>
 			<value name="KeyboardHooks" type="hex" data="01"/>
 			<value name="UseInjects" type="hex" data="01"/>
@@ -38,7 +38,9 @@
 			
 			
 			
+			
 			`
+			
 			
 			
 			
@@ -110,7 +112,7 @@
 			<value name="ClipboardClickPromptPosition" type="hex" data="02"/>
 			<value name="ClipboardDeleteLeftWord" type="hex" data="02"/>
 			<value name="TrueColorerSupport" type="hex" data="01"/>
-			<value name="FadeInactive" type="hex" data="01"/>
+			<value name="FadeInactive" type="hex" data="00"/>
 			<value name="FadeInactiveLow" type="hex" data="00"/>
 			<value name="FadeInactiveHigh" type="hex" data="D0"/>
 			<value name="ConVisible" type="hex" data="00"/>
@@ -172,9 +174,9 @@
 			<value name="bgImageColors" type="dword" data="ffffffff"/>
 			<value name="bgOperation" type="hex" data="00"/>
 			<value name="bgPluginAllowed" type="hex" data="01"/>
-			<value name="AlphaValue" type="hex" data="FF"/>
+			<value name="AlphaValue" type="hex" data="ED"/>
 			<value name="AlphaValueSeparate" type="hex" data="00"/>
-			<value name="AlphaValueInactive" type="hex" data="FF"/>
+			<value name="AlphaValueInactive" type="hex" data="A9"/>
 			<value name="UserScreenTransparent" type="hex" data="00"/>
 			<value name="ColorKeyTransparent" type="hex" data="00"/>
 			<value name="ColorKeyValue" type="dword" data="00010101"/>
@@ -183,8 +185,8 @@
 			<value name="ConWnd Width" type="dword" data="000000ba"/>
 			<value name="ConWnd Height" type="dword" data="0000001a"/>
 			<value name="Cascaded" type="hex" data="01"/>
-			<value name="ConWnd X" type="long" data="1925"/>
-			<value name="ConWnd Y" type="long" data="7"/>
+			<value name="ConWnd X" type="long" data="-1"/>
+			<value name="ConWnd Y" type="long" data="14"/>
 			<value name="16bit Height" type="ulong" data="0"/>
 			<value name="AutoSaveSizePos" type="hex" data="01"/>
 			<value name="IntegralSize" type="hex" data="00"/>
@@ -700,7 +702,7 @@
 			<value name="SuppressBells" type="hex" data="01"/>
 			<value name="JumpListAutoUpdate" type="hex" data="01"/>
 			<value name="CompressLongStrings" type="hex" data="01"/>
-			<value name="LastMonitor" type="string" data="1920,0,3840,1040"/>
+			<value name="LastMonitor" type="string" data="0,0,1920,1040"/>
 			<value name="Restore2ActiveMon" type="hex" data="01"/>
 			<value name="RestoreInactive" type="hex" data="01"/>
 			<value name="DownShowExOnTopMessage" type="hex" data="00"/>
