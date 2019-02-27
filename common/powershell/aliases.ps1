@@ -30,9 +30,9 @@ if (Get-Command ls.exe -ErrorAction SilentlyContinue | Test-Path) {
     # Set `ls` to call `ls.exe` and always use --color
     ${function:ls} = { ls.exe --color @args }
     # List all files in long format
-    ${function:l} = { ls.exe -lF @args }
+    ${function:l} = { ls -lF @args }
     # List all files in long format, including hidden files
-    ${function:la} = { ls.exe -laF @args }
+    ${function:la} = { ls -laF @args }
     # List only directories
     ${function:lsd} = { Get-ChildItem -Directory -Force @args }
 } else {
