@@ -32,7 +32,8 @@ Install 7zip
 Install vlc
 Install foxitreader
 Install etcher
-Instasll
+
+
 Install gnuwin32-coreutils.install #Doesn't add to path automatically
 if (-not ($env:PATH -like "*GNUWin32*")) {
     Set-ItemProperty -Path ‘Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment’ -Name PATH -Value "$ENV:PATH;C:\Program Files (x86)\GnuWin32\bin"
@@ -157,7 +158,7 @@ Push-Location $script:dotPath
 $local:tmpGitRemoteUrl = git remote get-url origin --push
 $local:GitRemoteUrl = "git@github.com:PromoFaux/.dotfiles-win.git"
 
-if (!$local:tmpGitRemoteUrl -eq $local:GitRemoteUrl){
+if (!($local:tmpGitRemoteUrl -eq $local:GitRemoteUrl)){
     git remote remove origin
     git remote add origin $local:GitRemoteUrl
     git fetch
