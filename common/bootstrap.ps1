@@ -155,11 +155,11 @@ $script:dotPath = "$env:UserProfile\.dotfiles"
 Push-Location $script:dotPath
 
 $local:tmpGitRemoteUrl = git remote get-url origin --push
-$local:GitRemoteUrl = "git@github.com:PromoFaux/.dotfiles.git"
+$local:GitRemoteUrl = "git@github.com:PromoFaux/.dotfiles-win.git"
 
 if (!$local:tmpGitRemoteUrl -eq $local:GitRemoteUrl){
     git remote remove origin
-    git remote add origin git@github.com:PromoFaux/.dotfiles.git
+    git remote add origin $local:GitRemoteUrl
     git fetch
 }
 
