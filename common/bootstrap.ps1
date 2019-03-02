@@ -153,9 +153,16 @@ Write-Output ""
 Write-Output "Configuring dotfiles repo to use SSH remote rather than https"
 $script:dotPath = "$env:UserProfile\.dotfiles"
 Push-Location $script:dotPath
-git remote remove origin
-git remote add origin git@github.com:PromoFaux/.dotfiles.git
-git fetch
+
+$local:tmpGitRemoteUrl = git remote get-url origin --push
+$local:GitRemoteUrl = "git@github.com:PromoFaux/.dotfiles.git"
+
+if (!$local:tmpGitRemoteUrl -eq $local:GitRemoteUrl){
+    git remote remove origin
+    git remote add origin git@github.com:PromoFaux/.dotfiles.git
+    git fetch
+}
+
 Pop-Location
 
 #Misc File Links

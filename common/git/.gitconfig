@@ -1,6 +1,6 @@
 [user]
         name = Adam Warner
-        email = adamw@rner.email
+        email = me@adamwarner.co.uk
         signingkey = 2EDFE579
 [commit]
         gpgsign = true
