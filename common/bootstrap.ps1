@@ -6,7 +6,7 @@
 $script:binPath = "C:\bin"
 $script:tempPath = "C:\temp"
 $script:gnupgPath = ""
-$script:expectedSSHKey = "2048 SHA256:BVZ+g2vOhiCmEDjN2FNR/mazm+se0+tkGTBFg24mk4g cardno:000604884497 (RSA)"
+# $script:expectedSSHKey = "2048 SHA256:BVZ+g2vOhiCmEDjN2FNR/mazm+se0+tkGTBFg24mk4g cardno:000604884497 (RSA)"
 
 #We need bin and temp
 CreateDirIfNotExist($script:binPath)
@@ -112,11 +112,14 @@ Write-Output ""
 Write-Output "Insert your YubiKey now!"
 WaitForProcessToStart "wsl-ssh-pageant"
 
+[string[]]$local:validSSHKeys = Get-Content -Path '.\ssh\authorized_keys'
+
 $local:wait = $true
 
 while ($local:wait -eq $true) {
-    $local:test = ssh-add -l
-    if (!($local:test -eq $script:expectedSSHKey)) {
+    $local:sshKeyOnCard = ssh-add -L
+    # //if (!($local:test -eq $script:expectedSSHKey)) {
+    if (!($local:validSSHKeys -contains $local:sshKeyOnCard)){
         Write-Output "wsl-ssh-pageant is running but cannot get SSH key"
         Start-Sleep -s 3
     }
