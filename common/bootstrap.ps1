@@ -36,7 +36,7 @@ Install etcher
 
 Install gnuwin32-coreutils.install #Doesn't add to path automatically
 if (-not ($env:PATH -like "*GNUWin32*")) {
-    Set-ItemProperty -Path ‘Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment’ -Name PATH -Value "$ENV:PATH;C:\Program Files (x86)\GnuWin32\bin"
+    Set-ItemProperty -Path "Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment" -Name PATH -Value "$ENV:PATH;C:\Program Files (x86)\GnuWin32\bin"
 }
 
 
