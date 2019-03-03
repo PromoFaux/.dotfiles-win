@@ -64,10 +64,7 @@ gpg --import .\gpg\pubkey.asc
 ########################################################################################################################################################
 Write-Output ""
 Write-Output "Linking gpg-agent.conf"
-$gpgOutput = & gpg --version | Select-String -Pattern "Home"
-$gpgOutput = $gpgOutput -replace "Home: ", ""
-$script:gnupgPath = $gpgOutput -replace "/", "\"
-
+$script:gnupgPath = gpgconf --list-dirs homedir
 lns "$script:gnupgPath\gpg-agent.conf" ".\gpg\gpg-agent.conf"
 lns "$script:gnupgPath\scdaemon.conf" ".\gpg\scdaemon.conf"
 
@@ -86,8 +83,8 @@ if (ScheduledTaskExists($local:taskName)) {
 #Link wsl-ssh-pageant directory
 lns "$script:binPath\wsl-ssh-pageant" ".\gpg\wsl-ssh-pageant"
 
-#link gpg-agent.bat
-lns "$script:binPath\gpg-agent.bat" ".\gpg\gpg-agent.bat"
+#link gpg-agent.ps1
+lns "$script:binPath\gpg-agent.ps1" ".\gpg\gpg-agent.ps1"
 
 # Set environment variable required for wsl-ssh-pageant:
 SetEnvVariable "User" "SSH_AUTH_SOCK" "\\.\pipe\ssh-pageant"
