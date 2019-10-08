@@ -32,6 +32,7 @@ Install 7zip
 Install vlc
 Install foxitreader
 Install etcher
+Install awk #Not included with gnuWin32-coreutils.Install
 
 
 Install gnuwin32-coreutils.install #Doesn't add to path automatically
