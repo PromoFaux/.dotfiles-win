@@ -1,1 +1,4 @@
 common/powershell/extra.ps1
+common/powershell/null
+common/powershell/Modules
+common/powershell/Scripts
