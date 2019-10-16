@@ -84,6 +84,7 @@ function Install([String]$package) {
 		Write-Output "Installing package $package"
 		choco install $package -y --limit-output
 	} else {
-		Write-Warn "Package $package already installed"
+		Write-Warn "Package $package already installed, checking for update."
+		choco upgrade $package -y --limit-output
 	}
 }
