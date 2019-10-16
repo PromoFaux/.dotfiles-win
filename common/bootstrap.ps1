@@ -23,7 +23,8 @@ Write-Output "Installing applications from package manager(s)..."
 Install Gpg4win
 Install GoogleChrome
 Install vscode
-Install conemu
+#Install conemu # Not playing nicely with windows built in SSH. May come back to it
+Install microsoft-windows-terminal
 Install yubico-authenticator
 Install nano
 Install screentogif
@@ -173,7 +174,8 @@ Pop-Location
 Write-Output ""
 Write-Output "Linking Misc Config files"
 
-lns "$env:AppData\ConEmu.xml" ".\conemu\ConEmu.xml"
+#lns "$env:AppData\ConEmu.xml" ".\conemu\ConEmu.xml"
+lns "$env:AppData\Microsoft\Windows\Start Menu\Programs\Startup\windows-terminal-quake.exe" ".\windows-terminal-quake\windows-terminal-quake.exe"
 
 #Powershell stuff
 $local:profileDir = Split-Path -parent $profile
