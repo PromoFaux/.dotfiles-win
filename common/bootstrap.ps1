@@ -174,8 +174,10 @@ Pop-Location
 Write-Output ""
 Write-Output "Linking Misc Config files"
 
-#lns "$env:AppData\ConEmu.xml" ".\conemu\ConEmu.xml"
-lns "$env:AppData\Microsoft\Windows\Start Menu\Programs\Startup\windows-terminal-quake.exe" ".\windows-terminal-quake\windows-terminal-quake.exe"
+#Windows Terminal Configs and shims (FANCY GIF BACKGROUNDS, WHAT?)
+lns "$env:AppData\Microsoft\Windows\Start Menu\Programs\Startup\windows-terminal-quake.exe" ".\windows-terminal\windows-terminal-quake.exe"
+lns "$env:UserProfile\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\profiles.json" ".\windows-terminal\profiles.json"
+lns "$script:binPath\terminal-background.gif" ".\windows-terminal\terminal-background.gif"
 
 #Powershell stuff
 $local:profileDir = Split-Path -parent $profile
