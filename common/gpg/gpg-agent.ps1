@@ -5,7 +5,7 @@ gpg-connect-agent /bye
 #If wsl-ssh-pageant is not running, start it in the background
 $script:wslPageant = Get-Process wsl-ssh-pageant -ErrorAction SilentlyContinue
 if (! $script:wslPageant) {
-    Start-Process -FilePath "c:\bin\wsl-ssh-pageant\wsl-ssh-pageant.exe" -ArgumentList "--systray --winssh ssh-pageant" -WindowStyle Hidden
+    Start-Process -FilePath "c:\bin\wsl-ssh-pageant\wsl-ssh-pageant.exe" -ArgumentList "--systray --winssh ssh-pageant --wsl C:\bin\ssh-agent.sock --force" -WindowStyle Hidden
 }
 
 #GPG goes all fucky when you switch between two yubikeys with the same GPG key (even with different subkeys)
