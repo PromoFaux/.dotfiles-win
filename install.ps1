@@ -1,5 +1,18 @@
 #Requires -RunAsAdministrator
 
+
+function Write-Error([string]$message) {
+    [Console]::ForegroundColor = 'red'
+    [Console]::Error.WriteLine($message)
+    [Console]::ResetColor()
+}
+
+function Write-Warn([string]$message) {
+    [Console]::ForegroundColor = 'yellow'
+    [Console]::Error.WriteLine($message)
+    [Console]::ResetColor()
+}
+
 function CommandExists([string]$cmdName)
 {
     $local:return = Get-Command $cmdName -ErrorAction SilentlyContinue
