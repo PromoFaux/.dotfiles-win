@@ -20,7 +20,8 @@ Write-Output "Installing applications from package manager(s)..."
 
 #Chocolatey
 
-Install Gpg4win
+#Install Gpg4win
+Install gnupg
 Install GoogleChrome
 Install vscode
 #Install conemu # Not playing nicely with windows built in SSH. May come back to it
