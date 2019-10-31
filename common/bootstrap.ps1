@@ -34,6 +34,7 @@ Install vlc
 Install foxitreader
 Install etcher
 Install awk #Not included with gnuWin32-coreutils.Install
+Install powertoys
 
 
 Install gnuwin32-coreutils.install #Doesn't add to path automatically
@@ -182,5 +183,3 @@ lns "$script:binPath\terminal-background.gif" ".\windows-terminal\terminal-backg
 #Powershell stuff
 $local:profileDir = Split-Path -parent $profile
 lns "$local:profileDir" ".\powershell"
-
-# & .\windows.ps1

@@ -26,6 +26,6 @@ Install mremoteng
 $local:confDir = "U:\AdamW\Config"
 lns "$env:APPDATA\mRemoteNG\confCons.xml" "$local:confDir\mRemoteNG\confCons.xml" #config stored on U drive
 # lns "$env:APPDATA\Microsoft\Microsoft SQL Server\140\Tools\Shell\RegSrvr.xml" "$local:confDir\SSMS\RegSrvr.xml"
+lns "C:\ProgramData\Devart\dbForge SQL Complete\Snippets" "$local:confDir\dbForge SQL Complete\Snippets"
 
 lns "C:\repos" "U:\AdamW\Repos"
-
