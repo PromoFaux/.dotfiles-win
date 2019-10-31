@@ -1,5 +1,18 @@
 #Requires -RunAsAdministrator
 
+
+function Write-Error([string]$message) {
+    [Console]::ForegroundColor = 'red'
+    [Console]::Error.WriteLine($message)
+    [Console]::ResetColor()
+}
+
+function Write-Warn([string]$message) {
+    [Console]::ForegroundColor = 'yellow'
+    [Console]::Error.WriteLine($message)
+    [Console]::ResetColor()
+}
+
 function CommandExists([string]$cmdName)
 {
     $local:return = Get-Command $cmdName -ErrorAction SilentlyContinue
@@ -46,8 +59,8 @@ else {
 
 #Install git so we can clone the repo to the local machine
 choco install git -y --limit-output -params '"/GitOnlyOnPath /NoShellIntegration"'
-#using rm.exe from git install seems to be happy to delete a folder containing a .git folder. PS/Windows cannot, for some reason.
-rm.exe -rf $script:dotfilesInstallDir
+
+Remove-Item $script:dotfilesInstallDir -Force
 
 git clone "https://github.com/$script:account/$script:repo" $script:dotfilesInstallDir
 

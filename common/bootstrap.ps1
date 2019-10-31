@@ -20,7 +20,8 @@ Write-Output "Installing applications from package manager(s)..."
 
 #Chocolatey
 
-Install Gpg4win
+#Install Gpg4win
+Install gnupg
 Install GoogleChrome
 Install vscode
 #Install conemu # Not playing nicely with windows built in SSH. May come back to it
@@ -34,6 +35,7 @@ Install vlc
 Install foxitreader
 Install etcher
 Install awk #Not included with gnuWin32-coreutils.Install
+Install powertoys
 
 
 Install gnuwin32-coreutils.install #Doesn't add to path automatically
@@ -182,5 +184,3 @@ lns "$script:binPath\terminal-background.gif" ".\windows-terminal\terminal-backg
 #Powershell stuff
 $local:profileDir = Split-Path -parent $profile
 lns "$local:profileDir" ".\powershell"
-
-# & .\windows.ps1
