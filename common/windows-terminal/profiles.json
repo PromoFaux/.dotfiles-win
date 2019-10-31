@@ -196,6 +196,20 @@
                 [
                     "alt+9"
                 ]
+            },
+            {
+                "command" : "splitHorizontal",
+                "keys" : 
+                [
+                    "ctrl+shift+-"
+                ]
+            },
+            {
+                "command" : "splitVertical",
+                "keys" : 
+                [
+                    "ctrl+shift+E"
+                ]
             }
         ],
         "requestedTheme" : "system",
