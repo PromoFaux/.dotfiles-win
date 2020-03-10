@@ -14,7 +14,9 @@
       "hidden": false,
       "name": "PowerShell",
       "source": "Windows.Terminal.PowershellCore",
-      "startingDirectory": "%USERPROFILE%"
+      "startingDirectory": "%USERPROFILE%",
+      "fontFace": "Hack NF",
+      "fontSize": 10
     },
     {
       "acrylicOpacity": 0.75,
