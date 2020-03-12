@@ -179,7 +179,3 @@ Write-Output "Linking Misc Config files"
 #Windows Terminal Configs and shims (FANCY GIF BACKGROUNDS, WHAT?)
 lns "$env:UserProfile\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\profiles.json" ".\windows-terminal\profiles.json"
 lns "$script:binPath\terminal-background.gif" ".\windows-terminal\terminal-background.gif"
-
-# #Powershell stuff
-# $local:profileDir = Split-Path -parent $profile
-# lns "$local:profileDir" ".\powershell"
