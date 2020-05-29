@@ -84,6 +84,9 @@ if (ScheduledTaskExists($local:taskName)) {
     Unregister-ScheduledTask $local:taskName -Confirm:$false
 }
 
+#Link npiperelay directory
+lns "$script:binPath\npiperelay" ".\gpg\npiperelay"
+
 #Link wsl-ssh-pageant directory
 lns "$script:binPath\wsl-ssh-pageant" ".\gpg\wsl-ssh-pageant"
 
