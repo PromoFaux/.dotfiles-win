@@ -29,7 +29,7 @@ if (-not ($env:PATH -like "*GNUWin32*")) {
 }
 
 
-#winget
+# winget
 winget install gnupg.Gpg4win
 winget install Microsoft.VisualStudioCode
 winget install Microsoft.WindowsTerminal
@@ -41,6 +41,7 @@ winget install Balena.Etcher
 winget install Microsoft.PowerToys
 winget install Google.Chrome
 winget install SublimeHQ.SublimeMerge
+winget install Microsoft.PowerShell
 
 #Scoop
 scoop bucket add extras
@@ -177,5 +178,10 @@ Write-Output ""
 Write-Output "Linking Misc Config files"
 
 #Windows Terminal Configs and shims (FANCY GIF BACKGROUNDS, WHAT?)
-lns "$env:UserProfile\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\profiles.json" ".\windows-terminal\profiles.json"
+lns "$env:UserProfile\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" ".\windows-terminal\settings.json"
 lns "$script:binPath\terminal-background.gif" ".\windows-terminal\terminal-background.gif"
+
+#Powershell profile(s)
+$local:profileDir = [Environment]::GetFolderPath("MyDocuments")
+lns "$local:profileDir\WindowsPowershell" "..\common\powershell"
+lns "$local:profileDir\Powershell" "..\common\powershell"
