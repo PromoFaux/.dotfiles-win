@@ -1,0 +1,1 @@
+Invoke-Expression (new-object net.webclient).downloadstring('https://raw.githubusercontent.com/PromoFaux/.dotfiles/master/install.ps1')

@@ -6,7 +6,7 @@
 $script:binPath = "C:\bin"
 $script:tempPath = "C:\temp"
 $script:gnupgPath = ""
-# $script:expectedSSHKey = "2048 SHA256:BVZ+g2vOhiCmEDjN2FNR/mazm+se0+tkGTBFg24mk4g cardno:000604884497 (RSA)"
+# $script:expectedSSHKey = "2048 SHA256:BVZ+g2vOhiCmEgitDjN2FNR/mazm+se0+tkGTBFg24mk4g cardno:000604884497 (RSA)"
 
 #We need bin and temp
 CreateDirIfNotExist($script:binPath)
@@ -19,24 +19,9 @@ Write-Output ""
 Write-Output "Installing applications from package manager(s)..."
 
 #Chocolatey
-
-#Install Gpg4win
-Install gnupg
-Install GoogleChrome
-Install vscode
-#Install conemu # Not playing nicely with windows built in SSH. May come back to it
-Install microsoft-windows-terminal
 Install yubico-authenticator
 Install nano
-Install screentogif
-Install Everything
-Install 7zip
-Install vlc
-Install foxitreader
-Install etcher
 Install awk #Not included with gnuWin32-coreutils.Install
-Install powertoys
-
 
 Install gnuwin32-coreutils.install #Doesn't add to path automatically
 if (-not ($env:PATH -like "*GNUWin32*")) {
@@ -44,12 +29,24 @@ if (-not ($env:PATH -like "*GNUWin32*")) {
 }
 
 
+#winget
+winget install gnupg.Gpg4win
+winget install Microsoft.VisualStudioCode
+winget install Microsoft.WindowsTerminal
+winget install NickeManarin.ScreenToGif
+winget install 7zip.7zip
+winget install voidtools.Everything
+winget install Foxit.FoxitReader
+winget install Balena.Etcher
+winget install Microsoft.PowerToys
+winget install Google.Chrome
+winget install SublimeHQ.SublimeMerge
+
 #Scoop
 scoop bucket add extras
 
 scoop install oh-my-posh
 scoop install posh-git
-scoop install sublime-merge
 
 scoop bucket add nerd-fonts
 scoop install Hack-NF
