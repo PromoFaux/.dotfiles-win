@@ -2,6 +2,8 @@
 
 - (powershell) `[distro] config --default-user root`
 
+- (wsl) oh my bash https://github.com/ohmybash/oh-my-bash
+
 - (wsl) `apt install git ssh tox`
 
 - (wsl) Add the contents of `.bashrc` in this directory to the WSL users `~/.bashrc`
