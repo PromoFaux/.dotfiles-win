@@ -95,8 +95,7 @@ lns "$script:binPath\gpg-agent.ps1" ".\gpg\gpg-agent.ps1"
 SetEnvVariable "User" "SSH_AUTH_SOCK" "\\.\pipe\ssh-pageant"
 
 #Get the currently logged in Users Sid to replace the token in gpg-agent.xml
-Add-Type -AssemblyName System.DirectoryServices.AccountManagement
-$script:currUserSid = [System.DirectoryServices.AccountManagement.UserPrincipal]::Current.Sid.Value
+$script:currUserSid = (New-Object -ComObject Microsoft.DiskQuota).TranslateLogonNameToSID((Get-WmiObject -Class Win32_ComputerSystem).Username)
 
 #Replace "[CURRENTUSERSSID] in gpg-agent.xml with the above variable"
 Copy-Item -Path .\gpg\gpg-agent.xml -Destination $script:tempPath\gpg-agent.xml

@@ -7,4 +7,4 @@
 [core]
         autocrlf = true
 [gpg]
-	program = C:\\Program Files (x86)\\Gpg4win\\..\\GnuPG\\bin\\gpg.exe
+	program = C:\\Program Files (x86)\\gnupg\\bin\\gpg.exe
