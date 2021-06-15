@@ -57,10 +57,11 @@ else {
 }
 
 #Install git so we can clone the repo to the local machine
-choco install git -y --limit-output -params '"/GitOnlyOnPath /NoShellIntegration"'
-
-#Reload Path
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+if (!(CommandExists("git"))) {
+    choco install git -y --limit-output -params '"/GitOnlyOnPath /NoShellIntegration"'
+    #Reload Path
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+}
 
 Remove-Item $script:dotfilesInstallDir -Force
 
