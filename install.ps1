@@ -1,6 +1,5 @@
 #Requires -RunAsAdministrator
 
-
 function Write-Error([string]$message) {
     [Console]::ForegroundColor = 'red'
     [Console]::Error.WriteLine($message)
@@ -40,11 +39,11 @@ $script:dotfilesInstallDir = "$env:USERPROFILE\.dotfiles"
 
 #Install Scoop and chocolatey
 Write-Output "Installing Scoop..."
-if (!(CommandExists("scoop"))) {    
+if (!(CommandExists("scoop"))) {
     Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
     Invoke-Expression (new-object net.webclient).downloadstring('https://get.scoop.sh')
 }
-else {    
+else {
     Write-Warn "Scoop Already installed"
 }
 
@@ -53,12 +52,15 @@ if (!(CommandExists("choco")))
     Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
     Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 }
-else {    
+else {
     Write-Warn "Chocolatey Already installed"
 }
 
 #Install git so we can clone the repo to the local machine
 choco install git -y --limit-output -params '"/GitOnlyOnPath /NoShellIntegration"'
+
+#Reload Path
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
 Remove-Item $script:dotfilesInstallDir -Force
 
