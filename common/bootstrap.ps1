@@ -39,6 +39,7 @@ scoop install Hack-NF
 
 scoop install 7zip
 scoop install windows-terminal
+scoop install vscode
 scoop install gpg4win-portable
 scoop install screentogif
 scoop install everything
