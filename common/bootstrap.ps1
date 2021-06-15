@@ -19,29 +19,13 @@ Write-Output ""
 Write-Output "Installing applications from package manager(s)..."
 
 #Chocolatey
-Install yubico-authenticator
+Install powershell-core
 Install nano
 Install awk #Not included with gnuWin32-coreutils.Install
-
-Install gnuwin32-coreutils.install #Doesn't add to path automatically
+Install gnuwin32-coreutils.install #Doesn't add to path automatically, do so below
 if (-not ($env:PATH -like "*GNUWin32*")) {
     Set-ItemProperty -Path "Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment" -Name PATH -Value "$ENV:PATH;C:\Program Files (x86)\GnuWin32\bin"
 }
-
-
-# winget
-winget install gnupg.Gpg4win
-winget install Microsoft.VisualStudioCode
-winget install Microsoft.WindowsTerminal
-winget install NickeManarin.ScreenToGif
-winget install 7zip.7zip
-winget install voidtools.Everything
-winget install Foxit.FoxitReader
-winget install Balena.Etcher
-winget install Microsoft.PowerToys
-winget install Google.Chrome
-winget install SublimeHQ.SublimeMerge
-winget install Microsoft.PowerShell
 
 #Scoop
 scoop bucket add extras
@@ -51,6 +35,14 @@ scoop install posh-git
 
 scoop bucket add nerd-fonts
 scoop install Hack-NF
+
+scoop install 7zip
+scoop install windows-terminal
+scoop install gpg4win-portable
+scoop install screentogif
+scoop install everything
+scoop install foxit-reader
+scoop install sublime-merge
 
 RefreshEnv.cmd
 
