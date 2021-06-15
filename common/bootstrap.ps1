@@ -45,7 +45,22 @@ scoop install everything
 # scoop install foxit-reader
 scoop install sublime-merge
 
-RefreshEnv.cmd
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+#Misc File Links
+########################################################################################################################################################
+########################################################################################################################################################
+Write-Output ""
+Write-Output "Linking Misc Config files"
+
+#Windows Terminal Configs and shims
+lns "$env:UserProfile\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" ".\windows-terminal\settings.json"
+lns "$env:UserProfile\AppData\Local\Packages\Microsoft\Windows Terminal\settings.json" ".\windows-terminal\settings.json"
+
+#Powershell profile(s)
+$local:profileDir = [Environment]::GetFolderPath("MyDocuments")
+lns "$local:profileDir\WindowsPowershell" "..\common\powershell"
+lns "$local:profileDir\Powershell" "..\common\powershell"
 
 #Import GPG key
 ########################################################################################################################################################
@@ -163,17 +178,4 @@ if (!($local:tmpGitRemoteUrl -eq $local:GitRemoteUrl)){
 
 Pop-Location
 
-#Misc File Links
-########################################################################################################################################################
-########################################################################################################################################################
-Write-Output ""
-Write-Output "Linking Misc Config files"
 
-#Windows Terminal Configs and shims (FANCY GIF BACKGROUNDS, WHAT?)
-lns "$env:UserProfile\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" ".\windows-terminal\settings.json"
-lns "$script:binPath\terminal-background.gif" ".\windows-terminal\terminal-background.gif"
-
-#Powershell profile(s)
-$local:profileDir = [Environment]::GetFolderPath("MyDocuments")
-lns "$local:profileDir\WindowsPowershell" "..\common\powershell"
-lns "$local:profileDir\Powershell" "..\common\powershell"
