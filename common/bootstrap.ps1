@@ -55,7 +55,7 @@ Write-Output "Linking Misc Config files"
 
 #Windows Terminal Configs and shims
 lns "$env:UserProfile\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" ".\windows-terminal\settings.json"
-lns "$env:UserProfile\AppData\Local\Packages\Microsoft\Windows Terminal\settings.json" ".\windows-terminal\settings.json"
+lns "$env:UserProfile\AppData\Local\Microsoft\Windows Terminal\settings.json" ".\windows-terminal\settings.json"
 
 #Powershell profile(s)
 $local:profileDir = [Environment]::GetFolderPath("MyDocuments")
