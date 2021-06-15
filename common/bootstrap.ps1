@@ -30,7 +30,8 @@ if (-not ($env:PATH -like "*GNUWin32*")) {
 #Scoop
 scoop bucket add extras
 
-scoop install oh-my-posh
+# scoop install oh-my-posh
+scoop install https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json #this is from https://ohmyposh.dev/docs/windows/#installation
 scoop install posh-git
 
 scoop bucket add nerd-fonts
