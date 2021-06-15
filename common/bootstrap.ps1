@@ -41,7 +41,7 @@ scoop install windows-terminal
 scoop install gpg4win-portable
 scoop install screentogif
 scoop install everything
-scoop install foxit-reader
+# scoop install foxit-reader
 scoop install sublime-merge
 
 RefreshEnv.cmd
