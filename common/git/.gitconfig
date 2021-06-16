@@ -6,7 +6,5 @@
         gpgsign = true
 [core]
         autocrlf = true
-[gpg]
-	program = C:\\Users\\Adam\\scoop\\apps\\gpg\\current\\bin\\gpg.exe
 [alias]
 	adog = log --all --decorate --oneline --graph

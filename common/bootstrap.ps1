@@ -143,8 +143,8 @@ while ($local:wait -eq $true) {
 ########################################################################################################################################################
 ########################################################################################################################################################
 Write-Output ""
-Write-Output "Linking .gitconfig and setting gpg.program"
-lns "$env:UserProfile\.gitconfig" ".\git\.gitconfig"
+Write-Output "Copying .gitconfig and setting gpg.program"
+Copy-Item -Path .\git\.gitconfig -Destination $env:UserProfile\.gitconfig
 lns "$env:UserProfile\.gitignore" ".\git\.gitignore"
 
 #Set gpg.program in git config (could be different on another machine?)
