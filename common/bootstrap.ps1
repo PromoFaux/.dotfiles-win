@@ -56,6 +56,8 @@ if ($script:answer -eq 0) {
     scoop install posh-git
     scoop install https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json #this is from https://ohmyposh.dev/docs/windows/#installation
 
+    scoop install sudo
+
 
 
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
