@@ -46,6 +46,12 @@ if ($script:answer -eq 0) {
     if ($script:winBuild -ge 18362) { # Windows Terminal wont install on older versions of windows (Such as LTSC like what work use)
         Install microsoft-windows-terminal
     }
+    else {
+        # Fine. We'll work without the sexy Windows terminal by using intergrated term in vscode/vs
+        # However, in  LTSC the console doesn't display ANSI colors correctly
+        # https://superuser.com/a/1300251
+        Set-ItemProperty -Path HKCU:\Console -Name VirtualTerminalLevel -Value 1
+    }
 
     Install nerdfont-hack
 
