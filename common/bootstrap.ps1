@@ -81,6 +81,9 @@ if ($script:answer -eq 0) {
         Set-ItemProperty -Path HKCU:\Console -Name VirtualTerminalLevel -Value 1
         # BUT (and this is different from latest win10) it can use Hack NF font face. So that's OK-ish
         Set-ItemProperty -Path HKCU:\Console -Name FaceName -Value "Hack NF"
+        set-ItemProperty -Path HKCU:\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe -Name FaceName -Value "Hack NF"
+        set-ItemProperty -Path HKCU:\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe -Name FaceName -Value "Hack NF"
+
         # (Cant be bothered to go back to conemu. Maybe one day... Or maybe I'll just install it
         #   seperately outside of dotfiles on machines that don't let me use Windows Terminal)
     }
