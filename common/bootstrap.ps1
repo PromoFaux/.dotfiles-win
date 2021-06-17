@@ -37,6 +37,7 @@ if ($script:answer -eq 0) {
     }
 
     Install vscode
+    Install gnupg
 
     #Scoop
     scoop bucket add extras
@@ -53,7 +54,6 @@ if ($script:answer -eq 0) {
         scoop install windows-terminal
     }
 
-    scoop install gpg4win-portable
     scoop install screentogif
     scoop install everything
     # scoop install foxit-reader

@@ -58,8 +58,8 @@ else {
 
 #Install git so we can clone the repo to the local machine
 if (!(CommandExists("git"))) {
-    # choco install git -y --limit-output -params '"/GitOnlyOnPath /NoShellIntegration"'
-    scoop install git
+    choco install git -y --limit-output -params '"/GitOnlyOnPath /NoShellIntegration"'
+    #scoop install git
     #Reload Path
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 }
