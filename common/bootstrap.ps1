@@ -22,15 +22,17 @@ Write-Output "Installing applications from package manager(s)..."
 Install powershell-core
 Install nano
 Install awk #Not included with gnuWin32-coreutils.Install
+
 Install gnuwin32-coreutils.install #Doesn't add to path automatically, do so below
 if (-not ($env:PATH -like "*GNUWin32*")) {
     Set-ItemProperty -Path "Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment" -Name PATH -Value "$ENV:PATH;C:\Program Files (x86)\GnuWin32\bin"
 }
 
+Install vscode
+
 #Scoop
 scoop bucket add extras
 
-# scoop install oh-my-posh
 scoop install https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json #this is from https://ohmyposh.dev/docs/windows/#installation
 scoop install posh-git
 
@@ -39,7 +41,7 @@ scoop install Hack-NF
 
 scoop install 7zip
 scoop install windows-terminal
-scoop install vscode
+
 scoop install gpg4win-portable
 scoop install screentogif
 scoop install everything
@@ -55,7 +57,6 @@ Write-Output ""
 Write-Output "Linking Misc Config files"
 
 #Windows Terminal Configs and shims
-lns "$env:UserProfile\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" ".\windows-terminal\settings.json"
 lns "$env:UserProfile\AppData\Local\Microsoft\Windows Terminal\settings.json" ".\windows-terminal\settings.json"
 
 #Powershell profile(s)
