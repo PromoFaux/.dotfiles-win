@@ -148,7 +148,7 @@ if ($script:answer -eq 0) {
     #Set gpg.program in .gitconfig-gpgprog (which will be in the INCLUDE part of the main .gitconfig)
     $local:gpgpath = ((Get-Command gpg).path).Replace("\","\\")
 
-    "[gpg]`r`n`tprogram = $local:gpgpath" | Out-File -FilePath "$env:UserProfile\.gitconfig-gpgprog"
+    "[gpg]`n`tprogram = $local:gpgpath" | Out-File -FilePath "$env:UserProfile\.gitconfig-gpgprog" -Encoding ascii
 
     # Set environment variable to tell git to use win32 SSH:
     $local:sshPath = (Get-Command ssh).path
