@@ -70,6 +70,14 @@ if ($script:answer -eq 0) {
     Write-Output ""
     Write-Output "Linking Misc Config files"
 
+    #Powershell profile(s)
+    $local:profileDir = [Environment]::GetFolderPath("MyDocuments")
+    lns "$local:profileDir\WindowsPowershell" "..\common\powershell"
+    lns "$local:profileDir\Powershell" "..\common\powershell"
+
+    # reload profile??
+    & $profile
+
     if ($script:winBuild -ge 18362) { # Windows Terminal wont install on older versions of windows (Such as works LTSC)
         #Windows Terminal Configs and shims
         lns "$env:UserProfile\AppData\Local\Microsoft\Windows Terminal\settings.json" ".\windows-terminal\settings.json"
@@ -88,10 +96,7 @@ if ($script:answer -eq 0) {
         #   seperately outside of dotfiles on machines that don't let me use Windows Terminal)
     }
 
-    #Powershell profile(s)
-    $local:profileDir = [Environment]::GetFolderPath("MyDocuments")
-    lns "$local:profileDir\WindowsPowershell" "..\common\powershell"
-    lns "$local:profileDir\Powershell" "..\common\powershell"
+
 }
 
 #Configure GPG
