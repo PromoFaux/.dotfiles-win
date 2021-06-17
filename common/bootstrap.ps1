@@ -27,7 +27,8 @@ if ($script:answer -eq 0) {
     Write-Output "Installing applications from package manager(s)..."
 
     #Chocolatey
-    Install powershell-core
+    Install 7zip
+    Install powershell-core "--install-arguments=""ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1"""
     Install nano
     Install awk #Not included with gnuWin32-coreutils.Install
 
@@ -36,8 +37,17 @@ if ($script:answer -eq 0) {
         Set-ItemProperty -Path "Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment" -Name PATH -Value "$ENV:PATH;C:\Program Files (x86)\GnuWin32\bin"
     }
 
-    Install vscode
+    Install vscode "/NoDesktopIcon"
     Install gnupg
+    Install sublimemerge
+    Install everything "/client-service /folder-context-menu"
+    Install screentogif
+
+    if ($script:winBuild -ge 18362) { # Windows Terminal wont install on older versions of windows (Such as LTSC like what work use)
+        Install microsoft-windows-terminal
+    }
+
+    Install nerdfont-hack
 
     #Scoop
     scoop bucket add extras
@@ -45,19 +55,7 @@ if ($script:answer -eq 0) {
     scoop install posh-git
     scoop install https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json #this is from https://ohmyposh.dev/docs/windows/#installation
 
-    scoop bucket add nerd-fonts
-    scoop install Hack-NF
 
-    scoop install 7zip
-
-    if ($script:winBuild -ge 18362) { # Windows Terminal wont install on older versions of windows (Such as works LTSC)
-        scoop install windows-terminal
-    }
-
-    scoop install screentogif
-    scoop install everything
-    # scoop install foxit-reader
-    scoop install sublime-merge
 
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 }

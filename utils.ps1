@@ -2,7 +2,7 @@ function CreateDirIfNotExist([string]$dirName)
 {
     if (!(Test-Path $dirName -PathType Container))
     {
-        New-Item -ItemType Directory -Force -Path $dirName | Out-Null 
+        New-Item -ItemType Directory -Force -Path $dirName | Out-Null
     }
 }
 
@@ -23,21 +23,21 @@ function WaitForProcessToStart([string]$procName)
     $running = $false;
     while( $running -eq $false ) {
 
-        $running = ( ( Get-Process | Where-Object ProcessName -eq $procName).Length -gt 0);        
+        $running = ( ( Get-Process | Where-Object ProcessName -eq $procName).Length -gt 0);
         Start-Sleep -s 1
     }
 }
 
-function lns([String]$link, [String]$target) {	
+function lns([String]$link, [String]$target) {
 	$file = Get-Item $link -ErrorAction SilentlyContinue
     $toFile = Get-Item $target -ErrorAction SilentlyContinue
     $target = $toFile.FullName
-    
+
 	if($file) {
 		if ($file.LinkType -ne "SymbolicLink") {
             Write-Warn "$($file.FullName) already exists and is not a symbolic link creating a backup"
-            $newName = $file.Name #my powershellfu is not strong at this point...             
-            Rename-Item -Path $file.FullName -NewName "$newName.bck"            
+            $newName = $file.Name #my powershellfu is not strong at this point...
+            Rename-Item -Path $file.FullName -NewName "$newName.bck"
 		} elseif ($file.Target -ne $target) {
 			Write-Error "$($file.FullName) already exists and points to '$($file.Target)', it should point to '$target'"
 			return
@@ -52,7 +52,7 @@ function lns([String]$link, [String]$target) {
 			New-Item -Type Directory -Path $folder
 		}
 	}
-	
+
 	Write-Output "Creating link $link to $target"
 	(New-Item -Path $link -ItemType SymbolicLink -Value $target -ErrorAction Continue) | Out-Null
 }
@@ -79,10 +79,18 @@ function Write-Warn([string]$message) {
     [Console]::ResetColor()
 }
 
-function Install([String]$package) {
+function Install([String]$package, [string]$params = "") {
 	if(-not ((choco list $package --exact --local-only --limitoutput) -like "$package*")) {
 		Write-Output "Installing package $package"
-		choco install $package -y --limit-output
+		if ($params -eq "")
+		{
+			choco install $package -y --limit-output
+		}
+		else
+		{
+			choco install $package -y --params $params --limit-output
+		}
+
 	} else {
 		Write-Warn "Package $package already installed, checking for update."
 		choco upgrade $package -y --limit-output
