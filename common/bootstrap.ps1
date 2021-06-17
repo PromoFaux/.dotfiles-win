@@ -142,16 +142,13 @@ $script:answer = $host.ui.PromptForChoice("", "Conigure git?", $choices, 0)
 if ($script:answer -eq 0) {
     Write-Output ""
     Write-Output "Copying .gitconfig and setting gpg.program"
-    Copy-Item -Path .\git\.gitconfig -Destination $env:UserProfile\.gitconfig
+    lns "$env:UserProfile\.gitconfig" ".\git\.gitconfig"
     lns "$env:UserProfile\.gitignore" ".\git\.gitignore"
 
-    #Set gpg.program in git config (could be different on another machine?)
-    $local:gitcfgGpgProgram = git config gpg.program
-    $local:gpgpath = (Get-Command gpg).path
+    #Set gpg.program in .gitconfig-gpgprog (which will be in the INCLUDE part of the main .gitconfig)
+    $local:gpgpath = ((Get-Command gpg).path).Replace("\","\\")
 
-    if (!($local:gitcfgGpgProgram -eq $local:gpgpath)) {
-        git config --global gpg.program $local:gpgpath
-    }
+    "[gpg]`r`n`tprogram = $local:gpgpath" | Out-File -FilePath "$env:UserProfile\.gitconfig-gpgprog"
 
     # Set environment variable to tell git to use win32 SSH:
     $local:sshPath = (Get-Command ssh).path

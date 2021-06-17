@@ -8,3 +8,5 @@
         autocrlf = true
 [alias]
 	adog = log --all --decorate --oneline --graph
+[include]
+        path = .gitconfig-gpgprog
