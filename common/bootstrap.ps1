@@ -135,33 +135,6 @@ if ($script:answer -eq 0) {
 
 }
 
-#Check the Yubikey batch file works works
-########################################################################################################################################################
-########################################################################################################################################################
-$script:answer = $host.ui.PromptForChoice("", "Test Yubikey?", $choices, 0)
-if ($script:answer -eq 0) {
-    Write-Output ""
-    Write-Output "Insert your YubiKey now!"
-    WaitForProcessToStart "wsl-ssh-pageant"
-
-    [string[]]$local:validSSHKeys = Get-Content -Path '.\ssh\authorized_keys'
-
-    $local:wait = $true
-
-    while ($local:wait -eq $true) {
-        $local:sshKeyOnCard = ssh-add -L
-        # //if (!($local:test -eq $script:expectedSSHKey)) {
-        if (!($local:validSSHKeys -contains $local:sshKeyOnCard)) {
-            Write-Output "wsl-ssh-pageant is running but cannot get SSH key"
-            Start-Sleep -s 3
-        }
-        else {
-            Write-Output "SSH Key is as expected, so everything should be working!"
-            $local:wait = $false
-        }
-    }
-}
-
 #.gitconfig stuff
 ########################################################################################################################################################
 ########################################################################################################################################################
@@ -189,8 +162,7 @@ if ($script:answer -eq 0) {
 ########################################################################################################################################################
 ########################################################################################################################################################
 #If this dotfiles repo has been installed via install.ps1, it wont be a repo, so need to init the folder and add remote.
-Write-Output ""
-Write-Output "Configuring dotfiles repo to use SSH remote rather than https"
+
 $script:dotPath = "$env:UserProfile\.dotfiles"
 Push-Location $script:dotPath
 
@@ -198,14 +170,38 @@ $local:tmpGitRemoteUrl = git remote get-url origin --push
 $local:GitRemoteUrl = "git@github.com:PromoFaux/.dotfiles-win.git"
 
 if (!($local:tmpGitRemoteUrl -eq $local:GitRemoteUrl)) {
+    Write-Output ""
+    Write-Output "Configuring dotfiles repo to use SSH remote rather than https"
     git remote remove origin
     git remote add origin $local:GitRemoteUrl
-    git fetch
-}
-else {
-    Write-Output "No need, it's already done"
+    #git fetch
 }
 
 Pop-Location
 
+#Check the Yubikey batch file works works
+########################################################################################################################################################
+########################################################################################################################################################
+$script:answer = $host.ui.PromptForChoice("Test Yubikey?","Might require a reboot to work" , $choices, 0)
+if ($script:answer -eq 0) {
+    Write-Output ""
+    Write-Output "Insert your YubiKey now!"
+    WaitForProcessToStart "wsl-ssh-pageant"
 
+    [string[]]$local:validSSHKeys = Get-Content -Path '.\ssh\authorized_keys'
+
+    $local:wait = $true
+
+    while ($local:wait -eq $true) {
+        $local:sshKeyOnCard = ssh-add -L
+        # //if (!($local:test -eq $script:expectedSSHKey)) {
+        if (!($local:validSSHKeys -contains $local:sshKeyOnCard)) {
+            Write-Output "wsl-ssh-pageant is running but cannot get SSH key"
+            Start-Sleep -s 3
+        }
+        else {
+            Write-Output "SSH Key is as expected, so everything should be working!"
+            $local:wait = $false
+        }
+    }
+}
