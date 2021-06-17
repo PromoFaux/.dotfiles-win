@@ -6,71 +6,75 @@
 $script:binPath = "C:\bin"
 $script:tempPath = "C:\temp"
 $script:gnupgPath = ""
+$script:winBuild = [System.Environment]::OSVersion.Version.Build
 
 #We need bin and temp
 CreateDirIfNotExist($script:binPath)
 CreateDirIfNotExist($script:tempPath)
 
-$script:y = new-Object System.Management.Automation.Host.ChoiceDescription "&Yes","Yes";
-$script:n = new-Object System.Management.Automation.Host.ChoiceDescription "&No","No";
+$script:y = new-Object System.Management.Automation.Host.ChoiceDescription "&Yes", "Yes";
+$script:n = new-Object System.Management.Automation.Host.ChoiceDescription "&No", "No";
 
-$script:choices = [System.Management.Automation.Host.ChoiceDescription[]]($script:y,$script:n);
+$script:choices = [System.Management.Automation.Host.ChoiceDescription[]]($script:y, $script:n);
 
 #Applications
 ########################################################################################################################################################
 ########################################################################################################################################################
-$script:answer = $host.ui.PromptForChoice("","Install Applications?",$choices,0)
-if ($script:answer -eq 0)
-{
+$script:answer = $host.ui.PromptForChoice("", "Install Applications?", $choices, 0)
+if ($script:answer -eq 0) {
 
-   Write-Output ""
-   Write-Output "Installing applications from package manager(s)..."
+    Write-Output ""
+    Write-Output "Installing applications from package manager(s)..."
 
-   #Chocolatey
-   Install powershell-core
-   Install nano
-   Install awk #Not included with gnuWin32-coreutils.Install
+    #Chocolatey
+    Install powershell-core
+    Install nano
+    Install awk #Not included with gnuWin32-coreutils.Install
 
-   Install gnuwin32-coreutils.install #Doesn't add to path automatically, do so below
-   if (-not ($env:PATH -like "*GNUWin32*")) {
-       Set-ItemProperty -Path "Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment" -Name PATH -Value "$ENV:PATH;C:\Program Files (x86)\GnuWin32\bin"
-   }
+    Install gnuwin32-coreutils.install #Doesn't add to path automatically, do so below
+    if (-not ($env:PATH -like "*GNUWin32*")) {
+        Set-ItemProperty -Path "Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment" -Name PATH -Value "$ENV:PATH;C:\Program Files (x86)\GnuWin32\bin"
+    }
 
-   Install vscode
+    Install vscode
 
-   #Scoop
-   scoop bucket add extras
+    #Scoop
+    scoop bucket add extras
 
-   scoop install https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json #this is from https://ohmyposh.dev/docs/windows/#installation
-   scoop install posh-git
+    scoop install https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json #this is from https://ohmyposh.dev/docs/windows/#installation
+    scoop install posh-git
 
-   scoop bucket add nerd-fonts
-   scoop install Hack-NF
+    scoop bucket add nerd-fonts
+    scoop install Hack-NF
 
-   scoop install 7zip
-   scoop install windows-terminal
+    scoop install 7zip
 
-   scoop install gpg4win-portable
-   scoop install screentogif
-   scoop install everything
-   # scoop install foxit-reader
-   scoop install sublime-merge
+    if ($script:winBuild -ge 18362) { # Windows Terminal wont install on older versions of windows (Such as works LTSC)
+        scoop install windows-terminal
+    }
 
-   $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+    scoop install gpg4win-portable
+    scoop install screentogif
+    scoop install everything
+    # scoop install foxit-reader
+    scoop install sublime-merge
+
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 }
 
 
 #Misc File Links
 ########################################################################################################################################################
 ########################################################################################################################################################
-$script:answer = $host.ui.PromptForChoice("","Link Configs?",$choices,0)
-if ($script:answer -eq 0)
-{
+$script:answer = $host.ui.PromptForChoice("", "Link Configs?", $choices, 0)
+if ($script:answer -eq 0) {
     Write-Output ""
     Write-Output "Linking Misc Config files"
 
-    #Windows Terminal Configs and shims
-    lns "$env:UserProfile\AppData\Local\Microsoft\Windows Terminal\settings.json" ".\windows-terminal\settings.json"
+    if ($script:winBuild -ge 18362) { # Windows Terminal wont install on older versions of windows (Such as works LTSC)
+        #Windows Terminal Configs and shims
+        lns "$env:UserProfile\AppData\Local\Microsoft\Windows Terminal\settings.json" ".\windows-terminal\settings.json"
+    }
 
     #Powershell profile(s)
     $local:profileDir = [Environment]::GetFolderPath("MyDocuments")
@@ -81,9 +85,8 @@ if ($script:answer -eq 0)
 #Configure GPG
 ########################################################################################################################################################
 ########################################################################################################################################################
-$script:answer = $host.ui.PromptForChoice("","Configure GPG?",$choices,0)
-if ($script:answer -eq 0)
-{
+$script:answer = $host.ui.PromptForChoice("", "Configure GPG?", $choices, 0)
+if ($script:answer -eq 0) {
     #Import GPG key
     Write-Output ""
     Write-Output "Importing GPG key"
@@ -123,7 +126,7 @@ if ($script:answer -eq 0)
 
     #Replace "[CURRENTUSERSSID] in gpg-agent.xml with the above variable"
     Copy-Item -Path .\gpg\gpg-agent.xml -Destination $script:tempPath\gpg-agent.xml
-    (Get-Content .\gpg\gpg-agent.xml) | Foreach-Object {$_ -replace '\[CURRENTUSERSID\]', ${script:currUserSid}} | Out-File $script:tempPath\gpg-agent.xml
+    (Get-Content .\gpg\gpg-agent.xml) | Foreach-Object { $_ -replace '\[CURRENTUSERSID\]', ${script:currUserSid} } | Out-File $script:tempPath\gpg-agent.xml
 
     #Register the scheduled task in the system
     Register-ScheduledTask -Xml (Get-Content "${script:tempPath}\gpg-agent.xml" | Out-String) -TaskName 'gpg-agent' | Out-Null
@@ -135,9 +138,8 @@ if ($script:answer -eq 0)
 #Check the Yubikey batch file works works
 ########################################################################################################################################################
 ########################################################################################################################################################
-$script:answer = $host.ui.PromptForChoice("","Test Yubikey?",$choices,0)
-if ($script:answer -eq 0)
-{
+$script:answer = $host.ui.PromptForChoice("", "Test Yubikey?", $choices, 0)
+if ($script:answer -eq 0) {
     Write-Output ""
     Write-Output "Insert your YubiKey now!"
     WaitForProcessToStart "wsl-ssh-pageant"
@@ -149,7 +151,7 @@ if ($script:answer -eq 0)
     while ($local:wait -eq $true) {
         $local:sshKeyOnCard = ssh-add -L
         # //if (!($local:test -eq $script:expectedSSHKey)) {
-        if (!($local:validSSHKeys -contains $local:sshKeyOnCard)){
+        if (!($local:validSSHKeys -contains $local:sshKeyOnCard)) {
             Write-Output "wsl-ssh-pageant is running but cannot get SSH key"
             Start-Sleep -s 3
         }
@@ -163,9 +165,8 @@ if ($script:answer -eq 0)
 #.gitconfig stuff
 ########################################################################################################################################################
 ########################################################################################################################################################
-$script:answer = $host.ui.PromptForChoice("","Conigure git?",$choices,0)
-if ($script:answer -eq 0)
-{
+$script:answer = $host.ui.PromptForChoice("", "Conigure git?", $choices, 0)
+if ($script:answer -eq 0) {
     Write-Output ""
     Write-Output "Copying .gitconfig and setting gpg.program"
     Copy-Item -Path .\git\.gitconfig -Destination $env:UserProfile\.gitconfig
@@ -196,7 +197,7 @@ Push-Location $script:dotPath
 $local:tmpGitRemoteUrl = git remote get-url origin --push
 $local:GitRemoteUrl = "git@github.com:PromoFaux/.dotfiles-win.git"
 
-if (!($local:tmpGitRemoteUrl -eq $local:GitRemoteUrl)){
+if (!($local:tmpGitRemoteUrl -eq $local:GitRemoteUrl)) {
     git remote remove origin
     git remote add origin $local:GitRemoteUrl
     git fetch
