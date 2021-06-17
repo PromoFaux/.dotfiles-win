@@ -46,12 +46,7 @@ if ($script:answer -eq 0) {
     if ($script:winBuild -ge 18362) { # Windows Terminal wont install on older versions of windows (Such as LTSC like what work use)
         Install microsoft-windows-terminal
     }
-    else {
-        # Fine. We'll work without the sexy Windows terminal by using intergrated term in vscode/vs
-        # However, in  LTSC the console doesn't display ANSI colors correctly
-        # https://superuser.com/a/1300251
-        Set-ItemProperty -Path HKCU:\Console -Name VirtualTerminalLevel -Value 1
-    }
+
 
     Install nerdfont-hack
 
@@ -78,6 +73,16 @@ if ($script:answer -eq 0) {
     if ($script:winBuild -ge 18362) { # Windows Terminal wont install on older versions of windows (Such as works LTSC)
         #Windows Terminal Configs and shims
         lns "$env:UserProfile\AppData\Local\Microsoft\Windows Terminal\settings.json" ".\windows-terminal\settings.json"
+    }
+    else {
+        # Fine. We'll work without the sexy Windows terminal by using intergrated term in vscode/vs
+        # However, in  LTSC the console doesn't display ANSI colors correctly
+        # https://superuser.com/a/1300251
+        Set-ItemProperty -Path HKCU:\Console -Name VirtualTerminalLevel -Value 1
+        # BUT (and this is different from latest win10) it can use Hack NF font face. So that's OK-ish
+        Set-ItemProperty -Path HKCU:\Console -Name FaceName -Value "Hack NF"
+        # (Cant be bothered to go back to conemu. Maybe one day... Or maybe I'll just install it
+        #   seperately outside of dotfiles on machines that don't let me use Windows Terminal)
     }
 
     #Powershell profile(s)
