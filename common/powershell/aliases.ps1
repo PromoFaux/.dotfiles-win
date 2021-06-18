@@ -12,7 +12,7 @@ function which($name)
         Get-Command $name | Select-Object -ExpandProperty Definition
     }
     else {
-        Write-Output "$name is not found!"        
+        Write-Output "$name is not found!"
     }
 }
 
@@ -59,4 +59,6 @@ if (Get-Command rm.exe -ErrorAction SilentlyContinue | Test-Path) {
     Remove-Item alias:rm -ErrorAction SilentlyContinue
     # Set `rm` to call `rm.exe`
     ${function:rm} = { rm.exe @args }
-} 
+}
+
+${function:ex} = { explorer.exe @args }
