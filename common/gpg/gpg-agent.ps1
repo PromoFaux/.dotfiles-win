@@ -1,5 +1,5 @@
 #Restart the gpg-agent (it locks up sometimes)
-#gpg-connect-agent "KILLAGENT" /bye
+gpg-connect-agent "KILLAGENT" /bye
 gpg-connect-agent /bye
 
 # If gpg-bridge is not running, start it in the background
