@@ -131,8 +131,8 @@ if ($script:answer -eq 0) {
     #Link npiperelay directory
     lns "$script:binPath\npiperelay" ".\gpg\npiperelay"
 
-    #Link wsl-ssh-pageant directory
-    lns "$script:binPath\wsl-ssh-pageant" ".\gpg\wsl-ssh-pageant"
+    #link gpg-brige directory (this also handles the ssh agent stuff)
+    lns "$script:binPath\gpg-bridge" ".\gpg\gpg-bridge"
 
     #link gpg-agent.ps1
     lns "$script:binPath\gpg-agent.ps1" ".\gpg\gpg-agent.ps1"
