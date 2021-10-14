@@ -6,7 +6,9 @@ Push-Location (Split-Path -parent $profile)
 "aliases","extra" | Where-Object {Test-Path "$_.ps1"} | ForEach-Object -process {Invoke-Expression ". .\$_.ps1"}
 Pop-Location
 
-oh-my-posh --init --shell pwsh --config "$(scoop prefix oh-my-posh)\themes\powerline.omp.json" | Invoke-Expression
+$omp = scoop prefix oh-my-posh
+
+& $omp\bin\oh-my-posh.exe --init --shell pwsh --config "$omp\themes\powerline.omp.json" | Invoke-Expression
 
 # Set-Theme Paradox
 # Chocolatey profile
