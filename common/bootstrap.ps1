@@ -38,7 +38,6 @@ if ($script:answer -eq 0) {
     }
 
     Install vscode "/NoDesktopIcon"
-    Install gnupg
     Install sublimemerge
     Install everything "/client-service /folder-context-menu"
     Install screentogif
@@ -106,51 +105,20 @@ if ($script:answer -eq 0) {
 ########################################################################################################################################################
 $script:answer = $host.ui.PromptForChoice("", "Configure GPG?", $choices, 0)
 if ($script:answer -eq 0) {
+    
+    Install gnupg
+
+    Push-Location -Path $script:binPath  # Or, wherever you want the win-gpg-agent directory located 
+	$uriLatestWinGpgAgentZip = Invoke-RestMethod -Uri "https://api.github.com/repos/rupor-github/win-gpg-agent/releases/latest"  | Select-Object -Property assets -ExpandProperty assets |  Where-Object -FilterScript {$_.name -eq "win-gpg-agent.zip" } | Select-Object -Property browser_download_url -ExpandProperty browser_download_url 
+	Invoke-WebRequest  -OutFile "win-gpg-agent.zip" -Uri $uriLatestWinGpgAgentZip
+	Expand-Archive .\win-gpg-agent.zip
+	Remove-Item .\win-gpg-agent.zip
+	Pop-Location
+
     #Import GPG key
     Write-Output ""
     Write-Output "Importing GPG key"
     gpg --import .\gpg\pubkey.asc
-
-    #gpg-agent conf
-    Write-Output ""
-    Write-Output "Linking gpg-agent.conf"
-    $script:gnupgPath = gpgconf --list-dirs homedir
-    lns "$script:gnupgPath\gpg-agent.conf" ".\gpg\gpg-agent.conf"
-    lns "$script:gnupgPath\scdaemon.conf" ".\gpg\scdaemon.conf"
-
-    #YubiKey Batch File scheduled task thing
-    Write-Output ""
-    Write-Output "Setting Up scheduled task to run script on yubi-key insert..."
-
-    $local:taskName = "gpg-agent"
-    #Check for, and remove task if it already exists. The one in the repo might be newer
-    if (ScheduledTaskExists($local:taskName)) {
-        Unregister-ScheduledTask $local:taskName -Confirm:$false
-    }
-
-    #Link npiperelay directory
-    lns "$script:binPath\npiperelay" ".\gpg\npiperelay"
-
-    #link gpg-brige directory (this also handles the ssh agent stuff)
-    lns "$script:binPath\gpg-bridge" ".\gpg\gpg-bridge"
-
-    #link gpg-agent.ps1
-    lns "$script:binPath\gpg-agent.ps1" ".\gpg\gpg-agent.ps1"
-
-    # Set environment variable required for wsl-ssh-pageant:
-    SetEnvVariable "User" "SSH_AUTH_SOCK" "\\.\pipe\ssh-pageant"
-
-    #Get the currently logged in Users Sid to replace the token in gpg-agent.xml
-    $script:currUserSid = (New-Object -ComObject Microsoft.DiskQuota).TranslateLogonNameToSID((Get-WmiObject -Class Win32_ComputerSystem).Username)
-
-    #Replace "[CURRENTUSERSSID] in gpg-agent.xml with the above variable"
-    Copy-Item -Path .\gpg\gpg-agent.xml -Destination $script:tempPath\gpg-agent.xml
-    (Get-Content .\gpg\gpg-agent.xml) | Foreach-Object { $_ -replace '\[CURRENTUSERSID\]', ${script:currUserSid} } | Out-File $script:tempPath\gpg-agent.xml
-
-    #Register the scheduled task in the system
-    Register-ScheduledTask -Xml (Get-Content "${script:tempPath}\gpg-agent.xml" | Out-String) -TaskName 'gpg-agent' | Out-Null
-
-    Remove-Item -Path $script:tempPath\gpg-agent.xml
 
 }
 

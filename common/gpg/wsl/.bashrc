@@ -1,36 +1,20 @@
-#### Stuff to make GPG/Yubi/SSH work from windows
-EXISTING_RELAY_PIDS=$(ps x | grep npiperelay | grep -v grep | awk '{ print $1 }')
-
-if [[ -z "${EXISTING_RELAY_PIDS}" ]]; then
-  socat \
-    EXEC:"/mnt/c/bin/npiperelay/npiperelay.exe /\/\./\pipe/\ssh-pageant" \
-    UNIX-LISTEN:/tmp/wsl2-ssh-agent.sock,unlink-close,unlink-early,fork >/dev/null 2>&1 &
+# detect what we have
+if [  $(uname -a | grep -c "Microsoft") -eq 1 ]; then
+    export ISWSL=1 # WSL 1
+elif [ $(uname -a | grep -c "microsoft") -eq 1 ]; then
+    export ISWSL=2 # WSL 2
+else
+    export ISWSL=0
 fi
-
-export SSH_AUTH_SOCK=/tmp/wsl2-ssh-agent.sock
-
-winGpgPath="/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe"
-linuxGpgPath_user="/usr/local/bin/gpg-win"
-if [[ -f "$winGpgPath" ]]; then
-  if [[ ! -f "$linuxGpgPath_user" ]]; then
-    ln -s "$winGpgPath" "$linuxGpgPath_user"
-  fi
-fi
-
-if [[ -f "/bin/systemctl" ]]; then
-  #Systemctl doesn't work in WSL2 anyway - moving the binary allows pi-hole installation script to start
-  mv /bin/systemctl /bin/systemctl.old
-fi
-
-if [[ -f $(which pihole-FTL) ]]; then
-  # Pi-hole is "installed" on this instance for development, sometimes the services don't start
-  if [[ ! $(pidof lighttpd) ]];then
-      echo "lighttpd not running - starting..."
-      service lighttpd start
-  fi
-
-  if [[ ! $(pidof pihole-FTL) ]];then
-      echo "pihole-FTL not running - starting..."
-      service pihole-FTL start
-  fi
+if [ ${ISWSL} -eq 1 ]; then
+    # WSL 1 could use AF_UNIX sockets from Windows side directly
+    if [ -n ${WSL_AGENT_HOME} ]; then
+        export GNUPGHOME=${WSL_AGENT_HOME}
+        export SSH_AUTH_SOCK=${WSL_AGENT_HOME}/S.gpg-agent.ssh
+    fi
+elif [ ${ISWSL} -eq 2 ]; then
+    ${HOME}/.local/bin/win-gpg-agent-relay start
+    export SSH_AUTH_SOCK=${HOME}/.gnupg/S.gpg-agent.ssh
+#else
+    # Do whatever -- this is real Linux
 fi
