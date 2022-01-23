@@ -4,9 +4,9 @@
         signingkey = 2EDFE579
 [commit]
         gpgsign = true
-[core]
-        autocrlf = true
 [alias]
 	adog = log --all --decorate --oneline --graph
 [include]
         path = .gitconfig-gpgprog
+[core]
+	autocrlf = false
