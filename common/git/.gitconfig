@@ -10,3 +10,5 @@
         path = .gitconfig-gpgprog
 [core]
 	autocrlf = false
+[safe]
+	directory = *
