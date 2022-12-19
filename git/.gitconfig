@@ -1,0 +1,17 @@
+[user]
+	name = Adam Warner
+	email = me@adamwarner.co.uk
+	# Below probably needs to be changed to the correct path per machine
+	signingkey = C:\\Users\\adam\\.ssh\\id_ecdsa_sk.pub
+[commit]
+	gpgsign = true
+[alias]
+	adog = log --all --decorate --oneline --graph
+[core]
+	autocrlf = false
+[gpg]
+	format = ssh
+[safe]
+	directory = C:/Users/adam/.dotfiles
+[gpg "ssh"]
+	defaultKeyCommand = ssh-add -L
