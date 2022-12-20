@@ -40,7 +40,8 @@ function lns([String]$link, [String]$target) {
             Rename-Item -Path $file.FullName -NewName "$newName.bck"
 		} elseif ($file.Target -ne $target) {
 			Write-Error "$($file.FullName) already exists and points to '$($file.Target)', it should point to '$target'"
-			return
+			Remove-Item $file
+			lns $link $target
 		} else {
 			Write-Warn "$($file.FullName) already linked"
 			return
