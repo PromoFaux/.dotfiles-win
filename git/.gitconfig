@@ -1,7 +1,7 @@
 [user]
 	name = Adam Warner
 	email = me@adamwarner.co.uk
-	signingkey = "key::sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIAvscSQgWnjKPhF5FQOoZXXAN6Es/XQA36b+aEJHHJJEAAAABHNzaDo="
+	signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKM8j+tb7tr1UzTilyjV5d39FkTyedl1p3zbo8KgB6B/ me@adamwarner.co.uk"
 [commit]
 	gpgsign = true
 [alias]
@@ -10,6 +10,8 @@
 	autocrlf = false
 [gpg]
 	format = ssh
+[init]
+	templatedir = ~/.git-templates
 [safe]
 	directory = C:/Users/adam/.dotfiles
 	directory = C:/Users/awarner/.dotfiles

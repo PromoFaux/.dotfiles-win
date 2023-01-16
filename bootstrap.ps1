@@ -95,28 +95,6 @@ if ($script:answer -eq 0) {
 
 }
 
-#Configure GPG
-########################################################################################################################################################
-########################################################################################################################################################
-# $script:answer = $host.ui.PromptForChoice("", "Configure GPG?", $choices, 0)
-# if ($script:answer -eq 0) {
-
-#     Install gnupg
-
-#     Push-Location -Path $script:binPath  # Or, wherever you want the win-gpg-agent directory located
-# 	$uriLatestWinGpgAgentZip = Invoke-RestMethod -Uri "https://api.github.com/repos/rupor-github/win-gpg-agent/releases/latest"  | Select-Object -Property assets -ExpandProperty assets |  Where-Object -FilterScript {$_.name -eq "win-gpg-agent.zip" } | Select-Object -Property browser_download_url -ExpandProperty browser_download_url
-# 	Invoke-WebRequest  -OutFile "win-gpg-agent.zip" -Uri $uriLatestWinGpgAgentZip
-# 	Expand-Archive .\win-gpg-agent.zip
-# 	Remove-Item .\win-gpg-agent.zip
-# 	Pop-Location
-
-#     #Import GPG key
-#     Write-Output ""
-#     Write-Output "Importing GPG key"
-#     gpg --import .\gpg\pubkey.asc
-
-# }
-
 #.gitconfig stuff
 ########################################################################################################################################################
 ########################################################################################################################################################
@@ -125,16 +103,11 @@ if ($script:answer -eq 0) {
     Write-Output ""
     Write-Output "Copying .gitconfig and .gitignore"
     lns "$env:UserProfile\.gitconfig" ".\git\.gitconfig"
-    # lns "$env:UserProfile\.gitignore" ".\git\.gitignore"
-
-    #Set gpg.program in .gitconfig-gpgprog (which will be in the INCLUDE part of the main .gitconfig)
-    # $local:gpgpath = ((Get-Command gpg).path).Replace("\","\\")
-
-    # "[gpg]`n`tprogram = $local:gpgpath" | Out-File -FilePath "$env:UserProfile\.gitconfig-gpgprog" -Encoding ascii
+    lns "$env:UserProfile\.git-templates" ".\git\.git-templates"
 
     # Set environment variable to tell git to use win32 SSH:
-    # $local:sshPath = (Get-Command ssh).path
-    # SetEnvVariable "User" "GIT_SSH" $local:sshPath
+    $local:sshPath = (Get-Command ssh).path
+    SetEnvVariable "User" "GIT_SSH" $local:sshPath
 }
 
 #Dotfiles repo
