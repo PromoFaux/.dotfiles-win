@@ -1,7 +1,7 @@
 [user]
 	name = Adam Warner
 	email = me@adamwarner.co.uk
-        signingkey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKM8j+tb7tr1UzTilyjV5d39FkTyedl1p3zbo8KgB6B/"
+	signingKey = ~/.ssh/id_ed25519
 [commit]
 	gpgsign = true
 [alias]
@@ -15,3 +15,4 @@
 [safe]
 	directory = C:/Users/adam/.dotfiles
 	directory = C:/Users/awarner/.dotfiles
+	directory = *

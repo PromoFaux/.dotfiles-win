@@ -104,10 +104,6 @@ if ($script:answer -eq 0) {
     Write-Output "Copying .gitconfig and .gitignore"
     lns "$env:UserProfile\.gitconfig" ".\git\.gitconfig"
     lns "$env:UserProfile\.git-templates" ".\git\.git-templates"
-
-    # Set environment variable to tell git to use win32 SSH:
-    $local:sshPath = (Get-Command ssh).path
-    SetEnvVariable "User" "GIT_SSH" $local:sshPath
 }
 
 #Dotfiles repo
