@@ -1,9 +1,12 @@
 bashrc:
 
 ```bash
-${HOME}/.local/bin/wsl-ssh-agent-relay start
-export SSH_AUTH_SOCK=${HOME}/.ssh/wsl-ssh-agent.sock
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+    eval `ssh-agent -s`
+    ssh-add
+fi
 ```
+
 
 # Other optional things
 

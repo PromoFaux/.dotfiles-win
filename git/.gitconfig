@@ -13,6 +13,4 @@
 [init]
 	templatedir = ~/.git-templates
 [safe]
-	directory = C:/Users/adam/.dotfiles
-	directory = C:/Users/awarner/.dotfiles
 	directory = *

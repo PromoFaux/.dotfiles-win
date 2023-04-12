@@ -2,7 +2,6 @@
 
 . ".\utils.ps1"
 
-
 $script:binPath = "C:\bin"
 $script:tempPath = "C:\temp"
 $script:gnupgPath = ""
@@ -55,6 +54,8 @@ if ($script:answer -eq 0) {
     scoop install sudo
 
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+
+    winget install "openssh beta" --force
 }
 
 
